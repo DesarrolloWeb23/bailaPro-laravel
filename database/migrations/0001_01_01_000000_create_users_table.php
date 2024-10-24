@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ROLES', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_rol');
         });
 
-        Schema::create('PERMISOS', function (Blueprint $table) {
+        Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
-            $table->foreignId('rol_id')->references('id')->on('ROLES');
+            $table->foreignId('rol_id')->references('id')->on('roles');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
-            $table->foreignId('rol_id')->references('id')->on('ROLES');
+            $table->foreignId('rol_id')->references('id')->on('roles');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -50,7 +50,7 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
-        Schema::create('GASTOS_CONTABLES', function (Blueprint $table) {
+        Schema::create('gastos_contables', function (Blueprint $table) {
             $table->id();
             $table->string('concepto');
             $table->date('fecha_gasto');
@@ -58,7 +58,7 @@ return new class extends Migration
             $table->foreignId('usuario_id')->references('id')->on('users');
         });
 
-        Schema::create('INGRESOS_CONTABLES', function (Blueprint $table) {
+        Schema::create('ingresos_contables', function (Blueprint $table) {
             $table->id();
             $table->string('concepto');
             $table->date('fecha_ingreso');
@@ -75,9 +75,9 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
-        Schema::dropIfExists('ROLES');
-        Schema::dropIfExists('PERMISOS');
-        Schema::dropIfExists('GASTOS_CONTABLES');
-        Schema::dropIfExists('INGRESOS_CONTABLES');
+        Schema::dropIfExists('roles');
+        Schema::dropIfExists('permisos');
+        Schema::dropIfExists('gastos_contables');
+        Schema::dropIfExists('ingresos_contables');
     }
 };
