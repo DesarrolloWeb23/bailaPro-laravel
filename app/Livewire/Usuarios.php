@@ -28,7 +28,7 @@ class Usuarios extends Component
     {
         try {
             User::where('id',$id)->delete();
-            return $this->redirect('usr',navigate:true); 
+            return $this->redirect('/usr/r',navigate:true); 
         } catch (\Exception $th) {
             dd($th);
         }
