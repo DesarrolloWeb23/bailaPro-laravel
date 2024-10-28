@@ -35,6 +35,8 @@ return new class extends Migration
             $table->date('fecha_contratacion');
             $table->string('nombre');
             $table->string('telefono');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
 
         Schema::create('clases', function (Blueprint $table) {
