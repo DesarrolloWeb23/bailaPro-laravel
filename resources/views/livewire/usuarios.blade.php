@@ -1,6 +1,6 @@
 <div class="columns-2 h-screen md:container md:mx-auto">
     <section class="h-3/4 p-4">
-        <form class="h-full pt-6 px-9 rounded-lg bg-white" wire:submit="save">
+        <form class="h-full pt-6 px-9 rounded-lg bg-white">
             <div class="mb-7">
                 <h1 class="text-2xl text-center font-semibold text-gray-900 dark:text-white">Registro de Usuarios</h1>
             </div>
@@ -33,8 +33,8 @@
                 </select>
             </div>
             
-            <x-button class="ms-4">
-                {{ __('Register') }}
+            <x-button class="ms-4" wire:click.prevent="{{ $usuarioId ? 'update' : 'save' }}">
+                {{ $usuarioId ? __('Update') : __('Register') }}
             </x-button>
         </form>
     </section>
@@ -94,6 +94,10 @@
                                         <x-danger-button wire:click="delete({{ $usuario->id }})"  wire:confirm="Are you sure you want to delete this post?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="submit">Eliminar</x-danger-button>
                                         {{-- {{ route('categorias.save', $categoria->id) }} --}}
+                                        <button wire:click="edit({{ $usuario->id }})" 
+                                            class="bg-yellow-500 text-white active:bg-yellow-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                            Editar
+                                        </button>
                                     </th>
                                 </tr>
                             @endforeach
@@ -104,4 +108,15 @@
             </div>
         </div>
     </section> 
+
+    <!-- Modal de Carga -->
+    <div x-data="{ loading: false }" x-show="loading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75">
+        <div class="bg-white p-5 rounded-lg shadow-lg text-center">
+            <svg class="animate-spin h-5 w-5 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-8 8 8 8 0 01-8-8z"></path>
+            </svg>
+            <p class="mt-4 text-gray-700">Cargando...</p>
+        </div>
+    </div>
 </div>

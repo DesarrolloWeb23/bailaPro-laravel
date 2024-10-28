@@ -16,6 +16,7 @@ class Usuarios extends Component
     public $password;
     public $password_confirmation;
     public $rol_id;
+    public $usuarioId;
 
     public function mount()
     {
@@ -29,6 +30,36 @@ class Usuarios extends Component
         try {
             User::where('id',$id)->delete();
             return $this->redirect('/usr/r',navigate:true); 
+        } catch (\Exception $th) {
+            dd($th);
+        }
+    }
+
+    public function edit($id)
+    {
+        $usuario = User::findOrFail($id);
+
+        $this->usuarioId = $usuario->id;
+        $this->name = $usuario->name;
+        $this->email = $usuario->email;
+        $this->rol_id = $usuario->rol_id;
+
+        // Emitir el evento para notificar que la edición ha sido completada
+        //$this->dispatch('editCompleted'); //se deshabilita ya que no se esta utilizando quitar el modal
+    }
+
+    public function update()
+    {
+        try {
+            $usuario = User::findOrFail($this->usuarioId);
+            $usuario->update([
+                'name' => $this->name,
+                'email' => $this->email,
+                'rol_id' => $this->rol_id,
+                'password' => bcrypt($this->password) // Opcional: solo si se desea actualizar la contraseña
+            ]);
+
+            return $this->redirect('/usr/r', navigate: true);
         } catch (\Exception $th) {
             dd($th);
         }
