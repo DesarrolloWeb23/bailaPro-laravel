@@ -19,5 +19,6 @@ Route::middleware([
 // Prefijo para usuarios
     Route::prefix('usr')->group(function () {
         Route::get('r', Usuarios::class)->name('usr.r'); // Leer usuarios
+        Route::post('c', [Usuarios::class, 'save'])->name('usr.c'); // Crear usuario
     });
 });
