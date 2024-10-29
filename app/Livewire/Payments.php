@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Pagos;
+use App\Models\Estudiantes;
 
 class Payments extends Component
 {
@@ -14,11 +15,13 @@ class Payments extends Component
     public $estudiante_id;
     public $payments;
     public $paymentId;
+    public $students;
 
 
     public function mount()
     {
-        $this->payments = Pagos::all();
+        $this->payments = Pagos::with('student')->get();
+        $this->students = Estudiantes::all();
     }
 
     public function delete($id)
@@ -35,6 +38,7 @@ class Payments extends Component
     {
         $payment = Pagos::findOrFail($id);
 
+        $this->paymentId = $payment->id;
         $this->concepto = $payment->concepto;
         $this->fecha_pago = $payment->fecha_pago;
         $this->monto = $payment->monto;
@@ -76,7 +80,8 @@ class Payments extends Component
     public function render()
     {
         return view('livewire.payments',[
-            'payments' => $this->payments
+            'payments' => $this->payments,
+            'students' => $this->students
         ]);
     }
 }
