@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Profesores;
+use App\Models\User;
 
 class Clases extends Model
 {
@@ -20,11 +20,11 @@ class Clases extends Model
         'duracion',
         'horario',
         'nombre',
-        'profesor_id'
+        'user_id'
     ];
 
     public function teacher()
     {
-        return $this->belongsTo(Profesores::class, 'profesor_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

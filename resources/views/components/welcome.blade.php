@@ -1,5 +1,9 @@
 <div class="grid grid-cols-2 p-6 lg:p-8 bg-white border-b border-gray-200">
     @if(auth()->user()->estado_id == '1')
+        @if(auth()->user()->rol_id == '2')
+            <!-- Contenido para profesores -->
+            <x-card tittle="Ver clases" description="Visualiza las clases que tienes asignadas como profesor de baile" ruta="lsn.r"/>
+        @endif
         @if(auth()->user()->rol_id == '3')
             <!-- Contenido para administradores -->
             <x-card tittle="Registrar usuario" description="Realizar el registro de nuevos usuarios" ruta="usr.r"/>

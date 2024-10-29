@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Clases;
-use App\Models\Profesores;
+use App\Models\User;
 
 class Lessons extends Component
 {
@@ -13,7 +13,7 @@ class Lessons extends Component
     public $duracion;
     public $horario;
     public $nombre;
-    public $profesor_id;
+    public $user_id;
     public $lessons;
     public $lessonId;
     public $teachers;
@@ -21,8 +21,15 @@ class Lessons extends Component
 
     public function mount()
     {
-        $this->lessons = Clases::with('teacher')->get();
-        $this->teachers = Profesores::all();
+        $sessionUser = auth()->user()->id;
+
+        if (auth()->user()->rol_id == '2') {
+            $this->lessons = Clases::where('user_id', $sessionUser )->with('teacher')->get();
+        }
+        else if (auth()->user()->rol_id == '3'){
+            $this->lessons = Clases::with('teacher')->get();
+        } 
+        $this->teachers = User::where('rol_id', 2)->get();
     }
 
     public function delete($id)
@@ -44,7 +51,7 @@ class Lessons extends Component
         $this->duracion = $lesson->duracion;
         $this->horario = $lesson->horario;
         $this->nombre = $lesson->nombre;
-        $this->profesor_id = $lesson->profesor_id;
+        $this->user_id = $lesson->user_id;
     }
 
     public function update()
@@ -73,7 +80,7 @@ class Lessons extends Component
                 'duracion' => $this->duracion,
                 'horario' => $this->horario,
                 'nombre' => $this->nombre,
-                'profesor_id' => $this->profesor_id
+                'user_id' => $this->user_id
             ]);
             return $this->redirect('/lsn/r',navigate:true); 
         } catch (\Exception $th) {
@@ -83,8 +90,6 @@ class Lessons extends Component
 
     public function render()
     {
-        return view('livewire.lessons',[
-            'lessons' => $this->lessons
-        ]);
+        return view('livewire.lessons');
     }
 }
