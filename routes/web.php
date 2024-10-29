@@ -6,6 +6,7 @@ use App\Livewire\Teacher;
 use App\Livewire\Payments;
 use App\Livewire\Students;
 use App\Livewire\Lessons;
+use App\Livewire\Inscriptions;
 
 
 Route::get('/', function () {
@@ -42,8 +43,13 @@ Route::middleware([
         Route::get('r', Lessons::class)->name('lsn.r'); 
     });
 
-// Prefijo para los usuarios de tipo maestro
+// Prefijo para los estudiantes
     Route::prefix('std')->group(function () {
         Route::get('r', Students::class)->name('std.r'); 
+    });
+
+// Prefijo para las isncrpciones
+    Route::prefix('ncp')->group(function () {
+        Route::get('r', Inscriptions::class)->name('ncp.r'); 
     });
 });
