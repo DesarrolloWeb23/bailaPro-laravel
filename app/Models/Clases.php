@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Inscripciones;
 
 class Clases extends Model
 {
@@ -26,5 +27,17 @@ class Clases extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function inscriptions()
+    {
+        return $this->hasMany(Inscripciones::class, 'clase_id');
+    }
+
+    public static function inscriptionsByStudent($studentId)
+    {
+        return self::whereHas('inscriptions', function($query) use ($studentId) {
+            $query->where('user_id', $studentId);
+        })->with('teacher')->get();
     }
 }

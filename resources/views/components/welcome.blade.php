@@ -7,6 +7,7 @@
         @if(auth()->user()->rol_id == '1')
             <!-- Contenido para estudiantes -->
             <x-card tittle="Inscripcion de clase" description="Mira las clases disponibles para incribirte a alguna de las clases" ruta="ncp.r"/>
+            <x-card tittle="Ver mis clases" description="Me muestra el listado de las clases a las que estoy inscrito" ruta="lsn.r"/>
         @endif
         @if(auth()->user()->rol_id == '3')
             <!-- Contenido para administradores -->

@@ -23,6 +23,9 @@ class Lessons extends Component
     {
         $sessionUser = auth()->user()->id;
 
+        if (auth()->user()->rol_id == '1') {
+            $this->lessons = Clases::inscriptionsByStudent($sessionUser);
+        }
         if (auth()->user()->rol_id == '2') {
             $this->lessons = Clases::where('user_id', $sessionUser )->with('teacher')->get();
         }
