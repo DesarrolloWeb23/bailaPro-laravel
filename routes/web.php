@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Usuarios;
 use App\Livewire\Teacher;
 use App\Livewire\Payments;
+use App\Livewire\Students;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,5 +39,10 @@ Route::middleware([
 // Prefijo para las clases de baile
     Route::prefix('lsn')->group(function () {
         Route::get('r', Payments::class)->name('lsn.r'); 
+    });
+
+// Prefijo para los usuarios de tipo maestro
+    Route::prefix('std')->group(function () {
+        Route::get('r', Students::class)->name('std.r'); 
     });
 });
