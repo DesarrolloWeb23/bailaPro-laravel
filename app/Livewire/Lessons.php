@@ -17,6 +17,7 @@ class Lessons extends Component
     public $lessons;
     public $lessonId;
     public $teachers;
+    public $teacherId;
 
     public function mount()
     {
@@ -39,26 +40,26 @@ class Lessons extends Component
         $lesson = Clases::findOrFail($id);
 
         $this->lessonId = $lesson->id;
-        $this->email = $lesson->email;
-        $this->especialidad = $lesson->especialidad;
-        $this->fecha_contratacion = $lesson->fecha_contratacion;
+        $this->capacidad = $lesson->capacidad;
+        $this->duracion = $lesson->duracion;
+        $this->horario = $lesson->horario;
         $this->nombre = $lesson->nombre;
-        $this->telefono = $lesson->telefono;
+        $this->profesor_id = $lesson->profesor_id;
     }
 
     public function update()
     {
         try {
-            $teacher = Profesores::findOrFail($this->teacherId);
-            $teacher->update([
-                'email' => $this->email,
-                'especialidad' => $this->especialidad,
-                'fecha_contratacion' => $this->fecha_contratacion,
+            $lesson = Clases::findOrFail($this->lessonId);
+            $lesson->update([
+                'capacidad' => $this->capacidad,
+                'duracion' => $this->duracion,
+                'horario' => $this->horario,
                 'nombre' => $this->nombre,
-                'telefono' => $this->telefono
+                'profesor_id' => $this->profesor_id
             ]);
 
-            return $this->redirect('/tch/r', navigate: true);
+            return $this->redirect('/lsn/r', navigate: true);
         } catch (\Exception $th) {
             dd($th);
         }
