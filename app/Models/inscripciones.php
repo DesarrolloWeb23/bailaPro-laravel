@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class inscripciones extends Model
 {
@@ -17,13 +18,13 @@ class inscripciones extends Model
         'id',
         'fecha_inscripcion',
         'clase_id',
-        'estudiante_id'
+        'user_id'
     ];
 
     //relacion con los estudiantes
     public function student()
     {
-        return $this->belongsTo(Estudiantes::class, 'estudiante_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     //relacion con las clases

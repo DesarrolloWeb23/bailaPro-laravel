@@ -4,6 +4,10 @@
             <!-- Contenido para profesores -->
             <x-card tittle="Ver clases" description="Visualiza las clases que tienes asignadas como profesor de baile" ruta="lsn.r"/>
         @endif
+        @if(auth()->user()->rol_id == '1')
+            <!-- Contenido para estudiantes -->
+            <x-card tittle="Inscripcion de clase" description="Mira las clases disponibles para incribirte a alguna de las clases" ruta="ncp.r"/>
+        @endif
         @if(auth()->user()->rol_id == '3')
             <!-- Contenido para administradores -->
             <x-card tittle="Registrar usuario" description="Realizar el registro de nuevos usuarios" ruta="usr.r"/>

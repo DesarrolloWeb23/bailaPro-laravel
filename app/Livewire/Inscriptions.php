@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Inscripciones;
-use App\Models\Estudiantes;
+use App\Models\User;
 use App\Models\Clases;
 
 class Inscriptions extends Component
@@ -12,7 +12,7 @@ class Inscriptions extends Component
     public $id;
     public $fecha_inscripcion;
     public $clase_id;
-    public $estudiante_id;
+    public $user_id;
     public $inscriptions;
     public $inscriptionId;
     public $students;
@@ -20,8 +20,8 @@ class Inscriptions extends Component
 
     public function mount()
     {
-        $this->students = Estudiantes::all();
-        $this->lessons = Clases::all();
+        $this->students = User::where('rol_id', 1)->get();
+        $this->lessons = Clases::with('teacher')->get();
         $this->inscriptions = Inscripciones::with('student', 'lesson')->get();
     }
 
@@ -42,7 +42,7 @@ class Inscriptions extends Component
         $this->inscriptionId = $inscription->id;
         $this->fecha_inscripcion = $inscription->fecha_inscripcion;
         $this->clase_id = $inscription->clase_id;
-        $this->estudiante_id = $inscription->estudiante_id;
+        $this->user_id = $inscription->user_id;
     }
 
     public function update()
@@ -52,7 +52,7 @@ class Inscriptions extends Component
             $inscription->update([
                 'fecha_inscripcion' => $this->fecha_inscripcion,
                 'clase_id' => $this->clase_id,
-                'estudiante_id' => $this->estudiante_id
+                'user_id' => $this->user_id
             ]);
 
             return $this->redirect('/ncp/r', navigate: true);
@@ -63,17 +63,25 @@ class Inscriptions extends Component
 
     public function save()
     {
+        if (auth()->user()->rol_id == '1') {
+            $this->user_id = auth()->user()->id;
+        } else if(auth()->user()->rol_id == '3') {
+            $this->user_id = $this->user_id;
+        }
+        
         try {
             Inscripciones::create([
                 'fecha_inscripcion' => now(),
                 'clase_id' => $this->clase_id,
-                'estudiante_id' => $this->estudiante_id
+                'user_id' => $this->user_id
             ]);
             return $this->redirect('/ncp/r', navigate: true);
         } catch (\Exception $th) {
             dd($th);
         }
     }
+
+
 
     public function render()
     {
