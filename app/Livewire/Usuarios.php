@@ -13,6 +13,10 @@ class Usuarios extends Component
     public $roles;
     public $name;
     public $email;
+    public $fecha_nacimiento;
+    public $telefono;
+    public $estado_id;
+    public $especialidad_id;
     public $password;
     public $password_confirmation;
     public $rol_id;
@@ -75,6 +79,9 @@ class Usuarios extends Component
             $creator->create([
                 'name' => $this->name,
                 'email' => $this->email,
+                'fecha_nacimiento' => $this->fecha_nacimiento,
+                'telefono' => $this->telefono,
+                'estado_id' => 1,
                 'password' => $this->password,
                 'password_confirmation' => $this->password_confirmation,
                 'rol_id' => $this->rol_id

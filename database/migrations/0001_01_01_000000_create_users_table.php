@@ -22,6 +22,16 @@ return new class extends Migration
             $table->foreignId('rol_id')->references('id')->on('roles');
         });
 
+        Schema::create('especialidades', function (Blueprint $table) {
+            $table->id();
+            $table->string('descripcion');
+        });
+
+        Schema::create('estados', function (Blueprint $table) {
+            $table->id();
+            $table->string('descripcion');
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -32,6 +42,11 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+            $table->timestamp('fecha_nacimiento');
+            $table->string('telefono');
+            $table->string('especialidad_id')->references('id')->on('especialidades')->nullable();;
+            $table->timestamp('fecha_contratacion')->nullable();
+            $table->foreignId('estado_id')->references('id')->on('estados');   
             $table->foreignId('rol_id')->references('id')->on('roles');
         });
 
