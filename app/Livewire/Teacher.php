@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Profesores;
+use App\Models\User;
 
 class Teacher extends Component
 {
@@ -11,7 +11,7 @@ class Teacher extends Component
     public $email;
     public $especialidad;
     public $fecha_contratacion;
-    public $nombre;
+    public $name;
     public $telefono;
     public $teachers;
     public $teacherId;
@@ -19,7 +19,7 @@ class Teacher extends Component
     public function mount()
     {
         //traer la informacion del modelo y guardarla en la variable usuarios
-        $this->teachers = Profesores::all();
+        $this->teachers = User::where('rol_id', 2)->get();
     }
 
     public function delete($id)
@@ -34,25 +34,25 @@ class Teacher extends Component
 
     public function edit($id)
     {
-        $teacher = Profesores::findOrFail($id);
+        $teacher = User::findOrFail($id);
 
         $this->teacherId = $teacher->id;
         $this->email = $teacher->email;
         $this->especialidad = $teacher->especialidad;
         $this->fecha_contratacion = $teacher->fecha_contratacion;
-        $this->nombre = $teacher->nombre;
+        $this->name = $teacher->name;
         $this->telefono = $teacher->telefono;
     }
 
     public function update()
     {
         try {
-            $teacher = Profesores::findOrFail($this->teacherId);
+            $teacher = User::findOrFail($this->teacherId);
             $teacher->update([
                 'email' => $this->email,
                 'especialidad' => $this->especialidad,
                 'fecha_contratacion' => $this->fecha_contratacion,
-                'nombre' => $this->nombre,
+                'name' => $this->name,
                 'telefono' => $this->telefono
             ]);
 
@@ -69,7 +69,7 @@ class Teacher extends Component
                 'email' => $this->email,
                 'especialidad' => $this->especialidad,
                 'fecha_contratacion' => $this->fecha_contratacion,
-                'nombre' => $this->nombre,
+                'name' => $this->name,
                 'telefono' => $this->telefono,
                 'created_at' => now(),
                 'updated_at' => null
@@ -82,7 +82,7 @@ class Teacher extends Component
 
     public function render()
     {
-        return view('livewire.profesores',[
+        return view('livewire.teacher',[
             'teachers' => $this->teachers
         ]);
     }
