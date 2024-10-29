@@ -5,6 +5,7 @@ use App\Livewire\Usuarios;
 use App\Livewire\Teacher;
 use App\Livewire\Payments;
 use App\Livewire\Students;
+use App\Livewire\Lessons;
 
 
 Route::get('/', function () {
@@ -38,7 +39,7 @@ Route::middleware([
 
 // Prefijo para las clases de baile
     Route::prefix('lsn')->group(function () {
-        Route::get('r', Payments::class)->name('lsn.r'); 
+        Route::get('r', Lessons::class)->name('lsn.r'); 
     });
 
 // Prefijo para los usuarios de tipo maestro

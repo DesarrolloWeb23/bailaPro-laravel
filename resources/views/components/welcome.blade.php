@@ -3,4 +3,5 @@
     <x-card tittle="Registrar profesor" description="Realizar el registro, edicion y ver el listado de los profesores" ruta="tch.r"/>
     <x-card tittle="Registrar estudiantes" description="Realizar el registro, edicion y ver el listado de los alumnos" ruta="std.r"/>
     <x-card tittle="Registrar pagos" description="Realizar registro de pagos" ruta="pym.r"/>
+    <x-card tittle="Registrar clases" description="Realizar registro de las clases programadas por los profesores" ruta="lsn.r"/>
 </div>

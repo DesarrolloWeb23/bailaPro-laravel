@@ -3,19 +3,25 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\Clases;
+use App\Models\Profesores;
 
 class Lessons extends Component
 {
     public $id;
     public $capacidad;
     public $duracion;
+    public $horario;
     public $nombre;
     public $profesor_id;
     public $lessons;
+    public $lessonId;
+    public $teachers;
 
     public function mount()
     {
-        $this->lessons = Clases::all();
+        $this->lessons = Clases::with('teacher')->get();
+        $this->teachers = Profesores::all();
     }
 
     public function delete($id)
@@ -62,10 +68,11 @@ class Lessons extends Component
     {
         try {
             Clases::create([
-                'concepto' => $this->concepto,
-                'fecha_pago' => $this->fecha_pago,
-                'monto' => $this->monto,
-                'estudiante_id' => $this->estudiante_id
+                'capacidad' => $this->capacidad,
+                'duracion' => $this->duracion,
+                'horario' => $this->horario,
+                'nombre' => $this->nombre,
+                'profesor_id' => $this->profesor_id
             ]);
             return $this->redirect('/lsn/r',navigate:true); 
         } catch (\Exception $th) {
