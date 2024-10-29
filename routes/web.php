@@ -33,4 +33,9 @@ Route::middleware([
     Route::prefix('pym')->group(function () {
         Route::get('r', Payments::class)->name('pym.r'); 
     });
+
+// Prefijo para las clases de baile
+    Route::prefix('lsn')->group(function () {
+        Route::get('r', Payments::class)->name('lsn.r'); 
+    });
 });
