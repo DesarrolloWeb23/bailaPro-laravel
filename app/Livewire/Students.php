@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Estudiantes;
+use App\Models\User;
 
 class Students extends Component
 {
@@ -11,20 +11,20 @@ class Students extends Component
     public $email;
     public $fecha_nacimiento;
     public $fecha_registro;
-    public $nombre;
+    public $name;
     public $telefono;
     public $students;
     public $studentId;
 
     public function mount()
     {
-        $this->students = Estudiantes::all();
+        $this->students = User::where('rol_id', 1)->get();
     }
 
     public function delete($id)
     {
         try {
-            Estudiantes::where('id',$id)->delete();
+            User::where('id',$id)->delete();
             return $this->redirect('/std/r',navigate:true); 
         } catch (\Exception $th) {
             dd($th);
@@ -33,23 +33,23 @@ class Students extends Component
 
     public function edit($id)
     {
-        $student = Estudiantes::findOrFail($id);
+        $student = User::findOrFail($id);
 
         $this->studentId = $student->id;
         $this->email = $student->email;
         $this->fecha_nacimiento = $student->fecha_nacimiento;
-        $this->nombre = $student->nombre;
+        $this->name = $student->name;
         $this->telefono = $student->telefono;
     }
 
     public function update()
     {
         try {
-            $student = Estudiantes::findOrFail($this->studentId);
+            $student = User::findOrFail($this->studentId);
             $student->update([
                 'email' => $this->email,
                 'fecha_nacimiento' => $this->fecha_nacimiento,
-                'nombre' => $this->nombre,
+                'name' => $this->name,
                 'telefono' => $this->telefono
             ]);
 
@@ -62,11 +62,11 @@ class Students extends Component
     public function save()
     {
         try {
-            Estudiantes::create([
+            User::create([
                 'email' => $this->email,
                 'fecha_nacimiento' => $this->fecha_nacimiento,
                 'fecha_registro' => now(),
-                'nombre' => $this->nombre,
+                'name' => $this->name,
                 'telefono' => $this->telefono
             ]);
             return $this->redirect('/std/r',navigate:true); 
