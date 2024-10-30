@@ -1,6 +1,8 @@
 # Usa una imagen base que incluya PHP y extensiones necesarias
 FROM php:8.2-fpm
 
+RUN docker-php-ext-install pdo pdo_mysql
+
 # Establece el directorio de trabajo
 WORKDIR /app
 
