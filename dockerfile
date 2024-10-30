@@ -1,10 +1,21 @@
 # Usa una imagen base que incluya PHP, Composer y Node.js
 FROM php:8.2-fpm
 
-# Instala dependencias de Composer y Node por separado
-RUN composer install --optimize-autoloader --no-dev --no-interaction --verbose || exit 1
-RUN npm install || exit 1
-RUN npm run build || exit 1
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia los archivos al contenedor
+COPY . /app
+
+# Instala Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
+# Ejecuta npm install en el directorio de trabajo
+RUN npm install
+
+# Compila los assets
+RUN npm run build
 
 # Instala Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
