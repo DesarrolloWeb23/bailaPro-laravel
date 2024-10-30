@@ -30,7 +30,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN npm install
 
 # Compila los assets
-RUN npm run dev
+RUN npm run build
 
 # Establece permisos adecuados (ajusta según tu proyecto)
 RUN chown -R www-data:www-data /app && \
