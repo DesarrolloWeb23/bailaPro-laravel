@@ -26,18 +26,21 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Instala las dependencias de Composer
 RUN composer install --optimize-autoloader --no-dev
 
+# solicita las librerias de composer
+RUN composer require
+
+# Exposición del puerto
+EXPOSE 8000
+
 # Instala las dependencias de Node.js
 RUN npm install
 
 # Compila los assets
-RUN npm run build
+RUN npm run start
 
 # Establece permisos adecuados (ajusta según tu proyecto)
 RUN chown -R www-data:www-data /app && \
     chmod -R 755 /app
-
-# Exposición del puerto
-EXPOSE 8000
 
 # Comando de inicio
 CMD ["php", "artisan", "serve", "--host=52.41.36.82", "--port=8000"]
