@@ -30,7 +30,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN composer require
 
 # realiza migraciones
-RUN php artisan migrate
+RUN php artisan migrate --force
 
 # Exposición del puerto
 EXPOSE 8000
