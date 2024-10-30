@@ -2,7 +2,7 @@
 FROM php:8.2-fpm
 
 # Instala dependencias de Composer y Node por separado
-RUN composer install --optimize-autoloader --no-dev || exit 1
+RUN composer install --optimize-autoloader --no-dev --no-interaction --verbose || exit 1
 RUN npm install || exit 1
 RUN npm run build || exit 1
 
