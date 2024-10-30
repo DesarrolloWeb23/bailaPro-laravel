@@ -32,19 +32,18 @@ RUN composer require
 # realiza migraciones
 RUN php artisan migrate --force
 
+# Exposición del puerto
+EXPOSE 8000
 
 # Instala las dependencias de Node.js
 RUN npm install
 
 # Compila los assets
-#RUN npm run build
+RUN npm run build
 
 # Establece permisos adecuados (ajusta según tu proyecto)
 RUN chown -R www-data:www-data /app && \
     chmod -R 755 /app
 
-# Exposición de los puertos
-EXPOSE 8000 3000
-
 # Comando de inicio
-CMD ["/start.sh"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
