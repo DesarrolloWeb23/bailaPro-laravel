@@ -32,6 +32,9 @@ RUN npm install
 # Compila los assets
 RUN npm run build
 
+# Ejecuta el servidor de desarrollo
+RUN npm run start
+
 # Establece permisos adecuados (ajusta según tu proyecto)
 RUN chown -R www-data:www-data /app && \
     chmod -R 755 /app
