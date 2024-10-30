@@ -29,6 +29,9 @@ RUN composer install --optimize-autoloader --no-dev
 # solicita las librerias de composer
 RUN composer require
 
+# realiza migraciones
+RUN php artisan migrate
+
 # Exposición del puerto
 EXPOSE 8000
 
@@ -36,11 +39,11 @@ EXPOSE 8000
 RUN npm install
 
 # Compila los assets
-RUN npm run start
+#RUN npm run start
 
 # Establece permisos adecuados (ajusta según tu proyecto)
 RUN chown -R www-data:www-data /app && \
     chmod -R 755 /app
 
 # Comando de inicio
-CMD ["php", "artisan", "serve", "--host=52.41.36.82", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
