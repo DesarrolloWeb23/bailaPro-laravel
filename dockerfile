@@ -39,7 +39,7 @@ EXPOSE 8000
 RUN npm install
 
 # Compila los assets
-#RUN npm run start
+RUN npm run start
 
 # Establece permisos adecuados (ajusta según tu proyecto)
 RUN chown -R www-data:www-data /app && \
