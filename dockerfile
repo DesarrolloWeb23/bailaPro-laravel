@@ -16,4 +16,5 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN composer install --optimize-autoloader --no-dev
 # Da permisos de ejecución al script de despliegue
 RUN chmod +x scripts/00-laravel-deploy.sh
+EXPOSE 80
 CMD ["scripts/00-laravel-deploy.sh"]
