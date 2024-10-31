@@ -1,49 +1,15 @@
-# Usa una imagen base que incluya PHP y extensiones necesarias
-FROM php:8.2-fpm
-
-RUN docker-php-ext-install pdo pdo_mysql
-
-# Establece el directorio de trabajo
-WORKDIR /app
-
-# Copia los archivos al contenedor
+FROM richarvey/nginx-php-fpm:1.7.2
 COPY . .
-
-# Instala dependencias del sistema y Node.js
-RUN apt-get update && apt-get install -y \
-    curl \
-    zip \
-    unzip \
-    git \
-    libzip-dev \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && docker-php-ext-install zip
-
-# Instala Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Instala las dependencias de Composer
-RUN composer install --optimize-autoloader --no-dev
-
-# solicita las librerias de composer
-RUN composer require
-
-# realiza migraciones
-RUN php artisan migrate --force
-
-# Exposición del puerto
-EXPOSE 8000
-
-# Instala las dependencias de Node.js
-RUN npm install
-
-# Compila los assets
-RUN npm run build
-
-# Establece permisos adecuados (ajusta según tu proyecto)
-RUN chown -R www-data:www-data /app && \
-    chmod -R 755 /app
-
-# Comando de inicio
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
+CMD ["scripts/00-laravel-deploy.sh"]
