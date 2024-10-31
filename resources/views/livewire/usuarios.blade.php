@@ -1,4 +1,4 @@
-<div class="columns-2 h-screen md:container md:mx-auto">
+<div class="grid grid-cols-3 h-screen md:container md:mx-auto">
     <section class="h-3/4 p-4">
         <form class="h-full pt-6 px-9 rounded-lg bg-white">
             <div class="mb-7">
@@ -10,16 +10,27 @@
                 <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
+                <input type="date" wire:model="fecha_nacimiento" name="fecha_nacimiento" id="fecha_nacimiento" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                <label for="fecha_nacimiento" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Fecha de nacimiento</label>
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                <input type="number" wire:model="telefono" name="telefono" id="telefono" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                <label for="telefono" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telefono</label>
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
                 <input type="email" wire:model="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                 <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <input type="password" wire:model="password" name="password" id="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="password"  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-            </div>
-            <div class="relative z-0 w-full mb-5 group">
-                <input type="password_confirmation" wire:model="password_confirmation" name="password_confirmation" id="password_confirmation" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="password_confirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+                <label for="estado_id" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent">Selecciona el estado</label>
+                <select id="estado_id" name="estado_id" wire:model="estado_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>...</option>
+                    @foreach ($states as $state)
+                        <tr>
+                            <option value="{{$state->id}}">{{$state->descripcion}}</option>
+                        </tr>
+                    @endforeach
+                </select>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <label for="rol_id" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent">Selecciona tu Rol</label>
@@ -39,13 +50,13 @@
         </form>
     </section>
 
-    <section class="h-3/4 p-4">   
+    <section class="col-span-2 h-3/4 p-4">   
         <div class="h-full pt-6 px-2 rounded-lg bg-white">
             <div class="">
                 <div class="rounded-t mb-0 px-4 py-3 border-0">
                     <div class="flex flex-wrap items-center">
                         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                            <h3 class="font-semibold text-base text-blueGray-700">Categorias</h3>
+                            <h3 class="font-semibold text-base text-blueGray-700">Listado de usuarios</h3>
                         </div>
                         <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                             <button  href="{{ route('dashboard') }}" wire:navigate
@@ -63,10 +74,16 @@
                                     ID
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    ROL
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     NOMBRE
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     EMAIL
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    ESTADO
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     ACTIONS
@@ -80,17 +97,20 @@
                                     <th wire:key="{{ $usuario->id }}" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
                                         {{$usuario->id}}
                                     </th>
-                                    {{-- nombre de la categoria --}}
                                     <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{ $usuario->rol ? $usuario->rol->nombre_rol : 'Rol no encontrado' }}
+                                    </th>
+                                    <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
                                         {{$usuario->name}}
                                     </th>
-                                    {{-- estado de la categoria --}}
                                     <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
                                         {{$usuario->email}}
                                     </th>
+                                    <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{ $usuario->state ? $usuario->state->descripcion : 'Estudiante no encontrado' }}
+                                    </th>
                                     {{-- acciones de la categoria --}}
                                     <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-
                                         <x-danger-button wire:click="delete({{ $usuario->id }})"  wire:confirm="Are you sure you want to delete this post?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="submit">Eliminar</x-danger-button>
                                         {{-- {{ route('categorias.save', $categoria->id) }} --}}

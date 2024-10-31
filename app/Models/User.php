@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Estados;
+use App\Models\Roles;
 
 class User extends Authenticatable
 {
@@ -28,6 +30,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'fecha_nacimiento',
+        'telefono',
+        'estado_id',
         'password',
         'rol_id',
     ];
@@ -64,5 +69,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(Estados::class, 'estado_id');
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Roles::class, 'rol_id');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Roles;
+use App\Models\Estados;
 use App\Actions\Fortify\CreateNewUser;
 
 class Usuarios extends Component
@@ -13,16 +14,22 @@ class Usuarios extends Component
     public $roles;
     public $name;
     public $email;
+    public $fecha_nacimiento;
+    public $telefono;
+    public $estado_id;
+    public $especialidad_id;
     public $password;
     public $password_confirmation;
     public $rol_id;
     public $usuarioId;
+    public $states;
 
     public function mount()
     {
         //traer la informacion del modelo y guardarla en la variable usuarios
-        $this->usuarios = User::all();
+        $this->usuarios = User::with('state','rol')->get();
         $this->roles = Roles::all();
+        $this->states = Estados::all();
     }
 
     public function delete($id)
@@ -43,9 +50,9 @@ class Usuarios extends Component
         $this->name = $usuario->name;
         $this->email = $usuario->email;
         $this->rol_id = $usuario->rol_id;
-
-        // Emitir el evento para notificar que la edición ha sido completada
-        //$this->dispatch('editCompleted'); //se deshabilita ya que no se esta utilizando quitar el modal
+        $this->telefono = $usuario->telefono;
+        $this->fecha_nacimiento = $usuario->fecha_nacimiento;
+        $this->estado_id = $usuario->estado_id;
     }
 
     public function update()
@@ -56,7 +63,10 @@ class Usuarios extends Component
                 'name' => $this->name,
                 'email' => $this->email,
                 'rol_id' => $this->rol_id,
-                'password' => bcrypt($this->password) // Opcional: solo si se desea actualizar la contraseña
+                //'password' => bcrypt($this->password) // Opcional: solo si se desea actualizar la contraseña
+                'telefono' => $this->telefono,
+                'fecha_nacimiento' => $this->fecha_nacimiento,
+                'estado_id' => $this->estado_id
             ]);
 
             return $this->redirect('/usr/r', navigate: true);
@@ -75,6 +85,9 @@ class Usuarios extends Component
             $creator->create([
                 'name' => $this->name,
                 'email' => $this->email,
+                'fecha_nacimiento' => $this->fecha_nacimiento,
+                'telefono' => $this->telefono,
+                'estado_id' => $this->estado_id,
                 'password' => $this->password,
                 'password_confirmation' => $this->password_confirmation,
                 'rol_id' => $this->rol_id
@@ -88,9 +101,6 @@ class Usuarios extends Component
     public function render()
     {
         //retornar la vista con los usuarios y roles
-        return view('livewire.usuarios',[
-            'usuarios' => $this->usuarios,
-            'roles' => $this->roles
-        ]);
+        return view('livewire.usuarios');
     }
 }
