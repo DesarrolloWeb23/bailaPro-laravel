@@ -8,8 +8,5 @@ echo "Caching routes..."
 php artisan route:cache
 echo "Running migrations..."
 php artisan migrate --force
-echo "Compila los assets"
-npm install
-npm run run build
 echo "ejecting"
 php artisan serve --host=0.0.0.0 --port=8000

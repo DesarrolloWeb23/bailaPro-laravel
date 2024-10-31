@@ -14,6 +14,10 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 # Instala Composer y las dependencias
 RUN composer install --optimize-autoloader --no-dev
+# Instala las dependencias de Node.js
+RUN npm install
+# Compila los assets
+RUN npm run build
 # Da permisos de ejecución al script de despliegue
 RUN chmod +x scripts/00-laravel-deploy.sh
 EXPOSE 80
