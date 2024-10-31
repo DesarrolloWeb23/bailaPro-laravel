@@ -14,6 +14,11 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 # Instala Composer y las dependencias
 RUN composer install --optimize-autoloader --no-dev
+# Instala Node.js y npm
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 # Instala las dependencias de Node.js
 RUN npm install
 # Compila los assets
