@@ -12,4 +12,6 @@ ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
+# Da permisos de ejecución al script de despliegue
+RUN chmod +x scripts/00-laravel-deploy.sh
 CMD ["scripts/00-laravel-deploy.sh"]
