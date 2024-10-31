@@ -9,7 +9,7 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     */
+     */ 
     public function register(): void
     {
         //
@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (env('APP_ENV') == 'production') {
-            $url->forceScheme('https');
+            $this->app['request']->server->set('HTTPS', true);
         }
     }
 }
