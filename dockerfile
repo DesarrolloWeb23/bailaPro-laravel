@@ -1,4 +1,4 @@
-FROM richarvey/nginx-php-fpm:1.7.2
+FROM richarvey/nginx-php-fpm:php8.2
 COPY . .
 # Image config
 ENV SKIP_COMPOSER 1
@@ -12,6 +12,8 @@ ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
+# Instala Composer y las dependencias
+RUN composer install --optimize-autoloader --no-dev
 # Da permisos de ejecución al script de despliegue
 RUN chmod +x scripts/00-laravel-deploy.sh
 CMD ["scripts/00-laravel-deploy.sh"]
