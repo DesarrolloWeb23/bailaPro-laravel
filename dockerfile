@@ -14,10 +14,8 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 # Instala Composer y las dependencias
 RUN composer install --optimize-autoloader --no-dev
-# Instala Node.js y npm con apk (en Alpine)
+# Instala Node.js y npm desde los repositorios de Alpine
 RUN apk update && \
-    apk add --no-cache curl && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | sh && \
     apk add --no-cache nodejs npm
 # Instala las dependencias de Node.js
 RUN npm install
