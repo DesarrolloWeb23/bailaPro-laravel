@@ -32,6 +32,11 @@ class Usuarios extends Component
         $this->states = Estados::all();
     }
 
+    public function register()
+    {
+        return view('auth.register', ['roles' => Roles::all(),]);
+    }
+
     public function delete($id)
     {
         try {

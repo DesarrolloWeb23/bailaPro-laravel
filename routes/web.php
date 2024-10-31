@@ -7,11 +7,16 @@ use App\Livewire\Payments;
 use App\Livewire\Students;
 use App\Livewire\Lessons;
 use App\Livewire\Inscriptions;
+use App\Models\Roles;
 
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/register', function () {
+    return view('auth.register', ['roles' => Roles::all()]);
+})->name('register');
 
 Route::middleware([
     'auth:sanctum',
