@@ -8,6 +8,7 @@ use App\Models\Roles;
 use App\Models\Estados;
 use App\Actions\Fortify\CreateNewUser;
 
+#[lazy]
 class Usuarios extends Component
 {
     public $usuarios;
@@ -30,6 +31,11 @@ class Usuarios extends Component
         $this->usuarios = User::with('state','rol')->get();
         $this->roles = Roles::all();
         $this->states = Estados::all();
+    }
+
+    public function placeholder()
+    {
+        return view('livewire.placeholders.skeleton');
     }
 
     public function register()
