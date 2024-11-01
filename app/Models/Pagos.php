@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Estudiantes;
+use App\Models\User;
 
 class Pagos extends Model
 {
@@ -19,12 +19,12 @@ class Pagos extends Model
         'concepto',
         'fecha_pago',
         'monto',
-        'estudiante_id'
+        'user_id'
     ];
 
     //relacion con los estudiantes
     public function student()
     {
-        return $this->belongsTo(Estudiantes::class, 'estudiante_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
