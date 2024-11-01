@@ -35,6 +35,11 @@ class Lessons extends Component
         $this->teachers = User::where('rol_id', 2)->get();
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.skeleton');
+    }
+
     public function delete($id)
     {
         try {
