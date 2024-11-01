@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>BailaPro</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -16,6 +16,11 @@
 
         <!-- Styles -->
         @livewireStyles
+        <!-- Scripts de flowbite tables-->
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+        
+        {{-- Icon --}}
+        <link rel='icon' type='image/ico' href="{{ asset('img/Logo.jpg')}}">
     </head>
     <body class="font-sans antialiased">
         <x-banner />
