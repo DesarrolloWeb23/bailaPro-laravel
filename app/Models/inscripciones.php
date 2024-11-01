@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class inscripciones extends Model
+
+class Inscripciones extends Model
 {
     public $timestamps = false; // Desactiva las columnas de marca de tiempo
 
