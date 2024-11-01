@@ -1,4 +1,11 @@
 <div class="grid lg:grid-cols-3 grid-cols-1 md:container md:mx-auto">
+    <section class="lg:col-span-3 col-1 p-4">
+        <div class="flex justify-end">
+            <a href="{{ route('dashboard') }}" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                Volver
+            </a>
+        </div>
+    </section>
     <section class="lg:col-auto col-1 p-4">
         <form class="pt-6 px-9 pb-6 rounded-lg bg-white">
             <div class="mb-7">
@@ -6,15 +13,15 @@
             </div>
             @csrf
             <div class="relative z-0 w-full mb-5 group">
-                <input type="concepto" wire:model="concepto" name="concepto" id="concepto" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                <input type="text" wire:model="concepto" name="concepto" id="concepto" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                 <label for="concepto" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Concepto</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="date" wire:model="fecha_pago" name="fecha_pago" id="fecha_pago" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="fecha_pago" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Fecha de contratacion</label>
+                <label for="fecha_pago" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Fecha de pago</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <input type="monto" wire:model="monto" name="monto" id="monto" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                <input type="number" wire:model="monto" name="monto" id="monto" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                 <label for="monto" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Monto</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
@@ -23,7 +30,7 @@
                     <option>...</option>
                     @foreach ($students as $student)
                         <tr>
-                            <option value="{{$student->id}}">{{$student->nombre}}</option>
+                            <option value="{{$student->id}}">{{$student->name}}</option>
                         </tr>
                     @endforeach
                 </select>
@@ -39,12 +46,7 @@
             <div class="rounded-t mb-0 px-4 py-3 border-0">
                 <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                        <h3 class="font-semibold text-base text-blueGray-700">Listado de pagos realizados</h3>
-                    </div>
-                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                        <button  href="{{ route('dashboard') }}" wire:navigate
-                            class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button">Volver</button>
+                        <h3 class="font-semibold text-base text-blueGray-700">Listado de pagos realizados por los estudiantes</h3>
                     </div>
                 </div>
             </div>
@@ -68,6 +70,9 @@
                             <th scope="col" class="px-6 py-3">
                                 ESTUDIANTE
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                ACCIONES
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,7 +91,7 @@
                                     {{$payment->monto}}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                    {{ $payment->student ? $payment->student->nombre : 'Estudiante no encontrado' }}
+                                    {{ $payment->student ? $payment->student->name : 'Estudiante no encontrado' }}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                                     <x-danger-button wire:click="delete({{ $payment->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
