@@ -25,6 +25,11 @@ class Inscriptions extends Component
         $this->inscriptions = Inscripciones::with('student', 'lesson')->get();
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.skeleton');
+    }
+
     public function delete($id)
     {
         try {
