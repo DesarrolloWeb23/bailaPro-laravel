@@ -1,8 +1,8 @@
-<div class="grid grid-cols-3 h-screen md:container md:mx-auto">
+<div class="grid lg:grid-cols-3 grid-cols-1 md:container md:mx-auto">
     @if(auth()->user()->rol_id == '3')
         <!-- Contenido para administradores -->
-        <section class="h-3/4 p-4">
-            <form class="h-full pt-6 px-9 rounded-lg bg-white">
+        <section class="lg:col-auto col-1 p-4">
+            <form class="pt-6 px-9 pb-6 rounded-lg bg-white">
                 <div class="mb-7">
                     <h1 class="text-2xl text-center font-semibold text-gray-900 dark:text-white">Registro de clases</h1>
                 </div>
@@ -38,16 +38,14 @@
                     {{ $lessonId ? __('Update') : __('Register') }}
                 </x-button>
             </form>
-        </section>    
-    @endif
-
-    <section class="col-span-2 h-3/4 p-4">   
-        <div class="h-full pt-6 px-2 rounded-lg bg-white">
-            <div class="">
+        </section>
+        
+        <section class="lg:col-span-2 col-1 h-auto p-4">   
+            <div class="h-full pt-6 px-2 rounded-lg bg-white">
                 <div class="rounded-t mb-0 px-4 py-3 border-0">
                     <div class="flex flex-wrap items-center">
                         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                            <h3 class="font-semibold text-base text-blueGray-700">listado de clases programadas</h3>
+                            <h3 class="font-semibold text-base text-blueGray-700">Listado de clases programadas</h3>
                         </div>
                         <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                             <button  href="{{ route('dashboard') }}" wire:navigate
@@ -56,9 +54,9 @@
                         </div>
                     </div>
                 </div>
-
+    
                 <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <table id="search-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
@@ -78,6 +76,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     PROFESOR
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    ACCIONES
                                 </th>
                             </tr>
                         </thead>
@@ -103,7 +104,7 @@
                                         {{ $lesson->teacher ? $lesson->teacher->name : 'Profesor no encontrado' }}
                                     </th>
                                     <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                                        <x-danger-button wire:click="delete({{ $lesson->id }})"  wire:confirm="Are you sure you want to delete this post?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        <x-danger-button wire:click="delete({{ $lesson->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="submit">Eliminar</x-danger-button>
                                         <button wire:click="edit({{ $lesson->id }})" 
                                             class="bg-yellow-500 text-white active:bg-yellow-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
@@ -115,10 +116,92 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
-        </div>
-    </section> 
+        </section> 
+    @endif
+
+    @if (auth()->user()->rol_id == '2')
+        <!-- Contenido para profesores -->
+        <section class="col-span-3 h-auto p-4">   
+            <div class="h-full pt-6 px-2 rounded-lg bg-white">
+                <div class="rounded-t mb-0 px-4 py-3 border-0">
+                    <div class="flex flex-wrap items-center">
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                            <h3 class="font-semibold text-base text-blueGray-700">Listado de clases programadas</h3>
+                        </div>
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                            <button  href="{{ route('dashboard') }}" wire:navigate
+                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button">Volver</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="relative overflow-x-auto">
+                    <table id="search-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    ID
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    CAPACIDAD
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    DURACION
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    HORARIO   
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    NOMBRE
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    PROFESOR
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    ACCIONES
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($lessons as $lesson)
+                                <tr>
+                                    <th wire:key="{{ $lesson->id }}" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{$lesson->id}}
+                                    </th>
+                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{$lesson->capacidad}}
+                                    </th>
+                                    <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{$lesson->duracion}}
+                                    </th>
+                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{$lesson->horario}}
+                                    </th>
+                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{$lesson->nombre}}
+                                    </th>
+                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                        {{ $lesson->teacher ? $lesson->teacher->name : 'Profesor no encontrado' }}
+                                    </th>
+                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                        <x-danger-button wire:click="delete({{ $lesson->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="submit">Eliminar</x-danger-button>
+                                        <button wire:click="edit({{ $lesson->id }})" 
+                                            class="bg-yellow-500 text-white active:bg-yellow-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                            Editar
+                                        </button>
+                                    </th>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section> 
+    @endif
+
     <!-- Modal de Carga -->
     <div x-data="{ loading: false }" x-show="loading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75">
         <div class="bg-white p-5 rounded-lg shadow-lg text-center">
