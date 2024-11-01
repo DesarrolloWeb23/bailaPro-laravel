@@ -16,6 +16,8 @@
 
         <!-- Styles -->
         @livewireStyles
+        <!-- Scripts de flowbite tables-->
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
         
         {{-- Icon --}}
         <link rel='icon' type='image/ico' href="{{ asset('img/Logo.jpg')}}">

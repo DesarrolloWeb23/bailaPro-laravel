@@ -43,14 +43,14 @@
                                         href="{{ url('/dashboard') }}"
                                         class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                     >
-                                        Dashboard
+                                        Panel de control
                                     </a>
                                 @else
                                     <a
                                         href="{{ route('login') }}"
                                         class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                     >
-                                        Log in
+                                        Iniciar sesion
                                     </a>
 
                                     @if (Route::has('register'))
@@ -58,7 +58,7 @@
                                             href="{{ route('register') }}" wire:navigate
                                             class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                         >
-                                            Register
+                                            Registrarse
                                         </a>
                                     @endif
                                 @endauth
@@ -93,7 +93,7 @@
                         </div>
                     </main>
 
-                    <footer class="py-16 text-center text-sm text-black">
+                    <footer class="py-16 text-center text-sm text-rose-100">
                         © TODOS LOS DERECHOS RESERVADOS - ByteCreaColombia
                     </footer>
                 </div>

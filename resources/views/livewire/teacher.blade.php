@@ -1,13 +1,13 @@
-<div class="grid grid-cols-3 h-screen md:container md:mx-auto">
-    <section class="h-3/4 p-4">
-        <form class="h-full pt-6 px-9 rounded-lg bg-white">
+<div class="grid lg:grid-cols-3 grid-cols-1 md:container md:mx-auto">
+    <section class="lg:col-auto col-1 p-4">
+        <form class="pt-6 px-9 pb-6 rounded-lg bg-white">
             <div class="mb-7">
                 <h1 class="text-2xl text-center font-semibold text-gray-900 dark:text-white">Registro de Profesores</h1>
             </div>
             @csrf
             <div class="relative z-0 w-full mb-5 group">
                 <input type="email" wire:model="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Correo electronico</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="especialidad" wire:model="especialidad" name="especialidad" id="especialidad" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -19,7 +19,7 @@
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="text" wire:model="name" name="name" id="name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre</label>
+                <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre Completo</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="telefono" wire:model="telefono" name="telefono" id="telefono" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -27,91 +27,88 @@
             </div>
             
             <x-button class="ms-4" wire:click.prevent="{{ $teacherId ? 'update' : 'save' }}">
-                {{ $teacherId ? __('Update') : __('Register') }}
+                {{ $teacherId ? __('Actualizar') : __('Registrar') }}
             </x-button>
         </form>
     </section>
 
-    <section class="col-span-2 h-3/4 p-4">   
+    <section class="lg:col-span-2 col-1 h-auto p-4">   
         <div class="h-full pt-6 px-2 rounded-lg bg-white">
-            <div class="">
-                <div class="rounded-t mb-0 px-4 py-3 border-0">
-                    <div class="flex flex-wrap items-center">
-                        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                            <h3 class="font-semibold text-base text-blueGray-700">listado de profesores</h3>
-                        </div>
-                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                            <button  href="{{ route('dashboard') }}" wire:navigate
-                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button">Volver</button>
-                        </div>
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                        <h3 class="font-semibold text-base text-blueGray-700">Listado de profesores</h3>
+                    </div>
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                        <button  href="{{ route('dashboard') }}" wire:navigate
+                            class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button">Volver</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="relative overflow-x-auto">
+                <table id="search-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                ID
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                NOMBRE COMPLETO
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                CORREO ELECTRONICO
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                ESPECIALIDAD   
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                FECHA DE CONTRATACION
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                TELEFONO
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                ACCIONES
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($teachers as $teacher)
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    ID
+                                <th wire:key="{{ $teacher->id }}" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                    {{$teacher->id}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    NOMBRE
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                    {{$teacher->name}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    EMAIL
+                                <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                    {{$teacher->email}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    ESPECIALIDAD   
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                    {{$teacher->especialidad}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    FECHA DE CONTRATACION
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                    {{$teacher->fecha_contratacion}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    TELEFONO
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
+                                    {{$teacher->telefono}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    ACTIONS
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+
+                                    <x-danger-button wire:click="delete({{ $teacher->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="submit">Eliminar</x-danger-button>
+                                    {{-- {{ route('categorias.save', $categoria->id) }} --}}
+                                    <button wire:click="edit({{ $teacher->id }})" 
+                                        class="bg-yellow-500 text-white active:bg-yellow-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                        Editar
+                                    </button>
                                 </th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($teachers as $teacher)
-                                <tr>
-                                    <th wire:key="{{ $teacher->id }}" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                        {{$teacher->id}}
-                                    </th>
-                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                        {{$teacher->name}}
-                                    </th>
-                                    <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                        {{$teacher->email}}
-                                    </th>
-                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                        {{$teacher->especialidad}}
-                                    </th>
-                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                        {{$teacher->fecha_contratacion}}
-                                    </th>
-                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                        {{$teacher->telefono}}
-                                    </th>
-                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-
-                                        <x-danger-button wire:click="delete({{ $teacher->id }})"  wire:confirm="Are you sure you want to delete this post?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="submit">Eliminar</x-danger-button>
-                                        {{-- {{ route('categorias.save', $categoria->id) }} --}}
-                                        <button wire:click="edit({{ $teacher->id }})" 
-                                            class="bg-yellow-500 text-white active:bg-yellow-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                                            Editar
-                                        </button>
-                                    </th>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </section> 
