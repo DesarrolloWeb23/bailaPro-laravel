@@ -1,4 +1,11 @@
 <div class="grid lg:grid-cols-3 grid-cols-1 md:container md:mx-auto">
+    <section class="lg:col-span-3 col-1 p-4">
+        <div class="flex justify-end">
+            <a href="{{ route('dashboard') }}" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                Volver
+            </a>
+        </div>
+    </section>
     @if(auth()->user()->rol_id == '3')
         <!-- Contenido para administradores -->
         <section class="lg:col-auto col-1 p-4">
@@ -46,11 +53,6 @@
                     <div class="flex flex-wrap items-center">
                         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3 class="font-semibold text-base text-blueGray-700">Listado de clases programadas</h3>
-                        </div>
-                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                            <button  href="{{ route('dashboard') }}" wire:navigate
-                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button">Volver</button>
                         </div>
                     </div>
                 </div>
@@ -128,11 +130,6 @@
                     <div class="flex flex-wrap items-center">
                         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3 class="font-semibold text-base text-blueGray-700">Listado de clases programadas</h3>
-                        </div>
-                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                            <button  href="{{ route('dashboard') }}" wire:navigate
-                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button">Volver</button>
                         </div>
                     </div>
                 </div>
