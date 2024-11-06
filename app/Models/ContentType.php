@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Roles extends Model
+class ContentType extends Model
 {
-    use HasFactory;
+    public $timestamps = false; // Desactiva las columnas de marca de tiempo
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +14,7 @@ class Roles extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
-        'nombre_rol'
+        'app_label',
+        'model',
     ];
 }

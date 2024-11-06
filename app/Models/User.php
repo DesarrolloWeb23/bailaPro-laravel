@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Estados;
+use App\Models\Estate;
 use App\Models\Roles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -31,11 +31,15 @@ class User  extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
-        'fecha_nacimiento',
-        'telefono',
-        'estado_id',
+        'email_verified_at',
         'password',
-        'rol_id',
+        'current_team_id',
+        'profile_photo_path',
+        'date_of_birth',
+        'phone',
+        'specialty_id',
+        'hiring_date',
+        'state_id',
     ];
 
     /**
@@ -74,13 +78,9 @@ class User  extends Authenticatable implements JWTSubject
 
     public function state()
     {
-        return $this->belongsTo(Estados::class, 'estado_id');
+        return $this->belongsTo(Estate::class, 'estado_id');
     }
 
-    public function rol()
-    {
-        return $this->belongsTo(Roles::class, 'rol_id');
-    }
 
     //JWT AUTH
     /**
