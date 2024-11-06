@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Estados extends Model
+class AuthGroup extends Model
 {
-    public $timestamps = false;
-    
+    protected $table = 'auth_group';
     protected $fillable = [
-        'id',
-        'descripcion'
+        'name',
+        // 'description',
     ];
-
 }
