@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Estados;
+use App\Models\Estate;
 use App\Models\Roles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User  extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
 
@@ -30,11 +31,15 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'fecha_nacimiento',
-        'telefono',
-        'estado_id',
+        'email_verified_at',
         'password',
-        'rol_id',
+        'current_team_id',
+        'profile_photo_path',
+        'date_of_birth',
+        'phone',
+        'specialty_id',
+        'hiring_date',
+        'state_id',
     ];
 
     /**
@@ -73,11 +78,28 @@ class User extends Authenticatable
 
     public function state()
     {
-        return $this->belongsTo(Estados::class, 'estado_id');
+        return $this->belongsTo(Estate::class, 'estado_id');
     }
 
-    public function rol()
+
+    //JWT AUTH
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
     {
-        return $this->belongsTo(Roles::class, 'rol_id');
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
