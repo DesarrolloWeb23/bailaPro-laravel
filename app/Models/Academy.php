@@ -6,20 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Academy extends Model
 {
-    //
-    protected $table = 'academys';
+    //Desactivar el timestamp
+    public $timestamps = false;
 
+    protected $table = 'academies';
     protected $fillable = [
         'name',
         'description',
         'address',
         'phone',
         'email',
-        'rating'
+        'rating',
     ];
 
-    public function users()
+    //La relacion hasMany indica que una academia puede tener muchos usuarios-academia
+    public function academyUser()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(AcademyUser::class);
     }
 }
