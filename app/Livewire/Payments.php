@@ -24,11 +24,6 @@ class Payments extends Component
         $this->students = User::where('rol_id', 1)->get();
     }
 
-    public function placeholder()
-    {
-        return view('livewire.placeholders.skeleton');
-    }
-
     public function delete($id)
     {
         try {
