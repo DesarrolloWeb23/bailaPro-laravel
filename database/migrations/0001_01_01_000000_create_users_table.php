@@ -11,44 +11,50 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        //=============================> Tabla Estados <=============================
+        Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_rol');
+            $table->string('name');
+            $table->string('description');
         });
 
-        Schema::create('permisos', function (Blueprint $table) {
+        //=============================> Tabla Especialidades <=============================
+        Schema::create('specialties', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
-            $table->foreignId('rol_id')->references('id')->on('roles');
+            $table->string('description');
         });
 
-        Schema::create('especialidades', function (Blueprint $table) {
-            $table->id();
-            $table->string('descripcion');
-        });
-
-        Schema::create('estados', function (Blueprint $table) {
-            $table->id();
-            $table->string('descripcion');
-        });
-
+        //=============================> Tabla Usuarios <=============================
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->foreignId('current_team_id')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamp('date_of_birth')->nullable();
+            $table->string('phone');
+            $table->timestamp('hiring_date')->nullable();
+            $table->string('specialty_id')->references('id')->on('specialties')->nullable();;
+            $table->foreignId('state_id')->references('id')->on('states');
             $table->timestamps();
-            $table->timestamp('fecha_nacimiento');
-            $table->string('telefono');
-            $table->string('especialidad_id')->references('id')->on('especialidades')->nullable();;
-            $table->timestamp('fecha_contratacion')->nullable();
-            $table->foreignId('estado_id')->references('id')->on('estados');   
-            $table->foreignId('rol_id')->references('id')->on('roles');
         });
+
+        //=============================> Tabla Clases <=============================
+        Schema::create('clases', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('duration');
+            $table->string('schedule');
+            $table->integer('capacity');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->foreignId(('state_id'))->references('id')->on('states');
+        });
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -65,21 +71,21 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
-        Schema::create('gastos_contables', function (Blueprint $table) {
-            $table->id();
-            $table->string('concepto');
-            $table->date('fecha_gasto');
-            $table->decimal('monto', 8, 2);
-            $table->foreignId('usuario_id')->references('id')->on('users');
-        });
+        // Schema::create('gastos_contables', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('concepto');
+        //     $table->date('fecha_gasto');
+        //     $table->decimal('monto', 8, 2);
+        //     $table->foreignId('usuario_id')->references('id')->on('users');
+        // });
 
-        Schema::create('ingresos_contables', function (Blueprint $table) {
-            $table->id();
-            $table->string('concepto');
-            $table->date('fecha_ingreso');
-            $table->decimal('monto', 8, 2);
-            $table->foreignId('usuario_id')->references('id')->on('users');
-        });
+        // Schema::create('ingresos_contables', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('concepto');
+        //     $table->date('fecha_ingreso');
+        //     $table->decimal('monto', 8, 2);
+        //     $table->foreignId('usuario_id')->references('id')->on('users');
+        // });
     }
 
     /**
@@ -90,9 +96,8 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
-        Schema::dropIfExists('roles');
-        Schema::dropIfExists('permisos');
-        Schema::dropIfExists('gastos_contables');
-        Schema::dropIfExists('ingresos_contables');
+        Schema::dropIfExists('clases');
+        Schema::dropIfExists('states');
+        Schema::dropIfExists('specialties');
     }
 };

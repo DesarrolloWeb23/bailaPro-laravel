@@ -12,29 +12,29 @@ return new class extends Migration
     public function up(): void
     {
 
-        Schema::create('pagos', function (Blueprint $table) {
-            $table->id();
-            $table->string('concepto');
-            $table->date('fecha_pago');
-            $table->decimal('monto', 8, 2);
-            $table->foreignId('user_id')->references('id')->on('users');
-        });
+        // Schema::create('pagos', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('concepto');
+        //     $table->date('fecha_pago');
+        //     $table->decimal('monto', 8, 2);
+        //     $table->foreignId('user_id')->references('id')->on('users');
+        // });
 
-        Schema::create('clases', function (Blueprint $table) {
-            $table->id();
-            $table->integer('capacidad');
-            $table->integer('duracion');
-            $table->string('horario');
-            $table->string('nombre');
-            $table->foreignId('user_id')->references('id')->on('users');
-        });
+        // Schema::create('clases', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->integer('capacidad');
+        //     $table->integer('duracion');
+        //     $table->string('horario');
+        //     $table->string('nombre');
+        //     $table->foreignId('user_id')->references('id')->on('users');
+        // });
 
-        Schema::create('inscripciones', function (Blueprint $table) {
-            $table->id();
-            $table->date('fecha_inscripcion');
-            $table->foreignId('clase_id')->references('id')->on('clases');
-            $table->foreignId('user_id')->references('id')->on('users');
-        });
+        // Schema::create('inscripciones', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->date('fecha_inscripcion');
+        //     $table->foreignId('clase_id')->references('id')->on('clases');
+        //     $table->foreignId('user_id')->references('id')->on('users');
+        // });
     }
 
     /**
