@@ -9,13 +9,18 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Estate;
+use App\Models\Estados;
 use App\Models\Roles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
 
-class User  extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use HasApiTokens;
+
+    //Roles y permisos
+    use HasRoles;
+
+    //Desactivamos timestamps
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -31,15 +36,10 @@ class User  extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
-        'email_verified_at',
-        'password',
-        'current_team_id',
-        'profile_photo_path',
         'date_of_birth',
         'phone',
-        'specialty_id',
-        'hiring_date',
         'state_id',
+        'password',
     ];
 
     /**
@@ -78,28 +78,19 @@ class User  extends Authenticatable implements JWTSubject
 
     public function state()
     {
-        return $this->belongsTo(Estate::class, 'estado_id');
+        return $this->belongsTo(State::class, 'estado_id');
     }
 
 
-    //JWT AUTH
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
+    //La relacion hasMany indica que un usuario puede tener muchos academyUser
+    public function academyUsers()
     {
-        return $this->getKey();
+        return $this->hasMany(AcademyUser::class);
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
+    //La relacion hasMany indica que un usuario puede tener muchas clases-usurios
+    public function claseUser()
     {
-        return [];
+        return $this->hasMany(ClaseUser::class);
     }
 }
