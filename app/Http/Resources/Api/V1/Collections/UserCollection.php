@@ -15,13 +15,16 @@ class UserCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' =>$this->collection->map(function($usuario){
+            'data' => $this->collection->map(function ($user) {
                 return [
-                    'id' => $usuario->id,
-                    'name' =>$usuario->name,
-                    'email' =>$usuario->email,
-                    'fecha_nacimiento' =>$usuario->fecha_nacimiento,
-                    'telefono' =>$usuario->telefono,
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'date_of_birth' => $user->date_of_birth,
+                    'phone' => $user->phone,
+                    'hiring_date' => $user->hiring_date,
+                    'state' => $user->state,
+                    'roles' => $user->roles->pluck('name'),
                 ];
             })->toArray(),
             'links' => [
@@ -31,14 +34,14 @@ class UserCollection extends ResourceCollection
                 'next' => $this->nextPageUrl(),
             ],
             'meta' => [
-                    'current_page' => $this->currentPage(),
-                    'from' => $this->firstItem(),
-                    'last_page' => $this->lastPage(),
-                    'path' => $this->path(),
-                    'per_page' => $this->perPage(),
-                    'to' => $this->lastItem(),
-                    'total' => $this->total(),
-                ],
+                'current_page' => $this->currentPage(),
+                'from' => $this->firstItem(),
+                'last_page' => $this->lastPage(),
+                'path' => $this->path(),
+                'per_page' => $this->perPage(),
+                'to' => $this->lastItem(),
+                'total' => $this->total(),
+            ],
             'status' => 'success',
         ];
     }

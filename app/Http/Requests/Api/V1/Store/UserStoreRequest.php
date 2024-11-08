@@ -26,17 +26,18 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name'  => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'], // Solo letras y espacios
+            'email'  => ['required', 'string', 'email', 'max:255', 'unique:users,email'], // Debe ser un correo válido y único
             'date_birth'  => ['required', 'date'], // Validación para una fecha
             'phone' => ['required', 'string', 'regex:/^\d{10,15}$/'], // Solo números, entre 10 y 15 dígitos
-            'email'  => ['required', 'string', 'email', 'max:255', 'unique:users,email'], // Debe ser un correo válido y único
             'password'  => ['required', 'string', 'min:8', 'confirmed'], // Mínimo 8 caracteres y debe ser confirmado
-            'role'  => ['required', 'integer','exists:roles,id'], // Ejemplo de roles válidos: admin, user, guest
-            'state'  => ['required', 'integer'], // Ejemplo de roles válidos: admin, user, guest
+            'role'  => ['required', 'integer', 'exists:roles,id'], // Ejemplo de roles válidos: admin, user, guest
+            'state' => ['required', 'integer', 'exists:states,id'], // Ejemplo de estados válidos: 1, 2, 3
         ];
     }
 
 
-    public function messages(): array{
+    public function messages(): array
+    {
         return [
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
@@ -64,6 +65,10 @@ class UserStoreRequest extends FormRequest
             'role.required' => 'El rol es obligatorio.',
             'role.integer' => 'El rol debe ser Numero',
             'role.exists' => 'El rol seleccionado no es válido.',
+
+            'state.required' => 'El estado es obligatorio.',
+            'state.integer' => 'El estado debe ser un número.',
+            'state.exists' => 'El estado seleccionado no es válido.',
         ];
     }
 
@@ -73,5 +78,4 @@ class UserStoreRequest extends FormRequest
             'errors' => $validator->errors()
         ], 422));
     }
-
 }

@@ -24,8 +24,12 @@ class UserController extends Controller
             $queryItems = $filter->transform($request);
             // $usuarios = Usuarios::w
             $usuarios = User::where($queryItems)->paginate();
+            //Roles y permisos
+            $usuarios = User::with('roles')->paginate();
+
 
             $usuarioResource = new UserCollection($usuarios);
+
             if ($usuarioResource) {
                 return response()->json($usuarioResource, 200);
             } else {
@@ -42,6 +46,21 @@ class UserController extends Controller
         }
     }
 
+    public function show(int $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return new UserResource($user);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Ocurrió un error inesperado',
+                'details' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+
     public function store(UserStoreRequest $request)
     {
         try {
@@ -52,9 +71,13 @@ class UserController extends Controller
 
             $mappedData = $filter->mapAndFilter($validateData);
 
-            $user = User::create($mappedData);
 
-            return response()->json($user, 201);
+            $user = User::create($mappedData);
+            //Asignamos el rol al usuario
+            $user->assignRole($validateData['role']);
+            $userResource = new UserResource($user);
+
+            return response()->json($userResource, 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => true,
