@@ -15,29 +15,24 @@ class Clases extends Model
      *
      * @var array<int, string>
      */
+
+    protected $table = 'clases';
+
     protected $fillable = [
-        'id',
-        'capacidad',
-        'duracion',
-        'horario',
-        'nombre',
-        'user_id'
+        'name',
+        'description',
+        'duration',
+        'shedule',
+        'capacity',
+        'start_date',
+        'end_date',
+        // 'quota',// Pendiente
+        'state_id',
     ];
 
-    public function teacher()
+    //La relacion hasMany indica que una clase puede tener muchas clases-usurios
+    public function claseUser()
     {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function inscriptions()
-    {
-        return $this->hasMany(Inscripciones::class, 'clase_id');
-    }
-
-    public static function inscriptionsByStudent($studentId)
-    {
-        return self::whereHas('inscriptions', function($query) use ($studentId) {
-            $query->where('user_id', $studentId);
-        })->with('teacher')->get();
+        return $this->hasMany(ClaseUser::class);
     }
 }

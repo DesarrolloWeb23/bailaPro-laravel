@@ -15,13 +15,13 @@
             </div>
 
             <div class="mt-4">
-                <x-label for="fecha_nacimiento" value="{{ __('Fecha de Nacimiento') }}" />
-                <x-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')" required autofocus autocomplete="fecha_nacimiento" />
+                <x-label for="date_of_birth" value="{{ __('Fecha de Nacimiento') }}" />
+                <x-input id="date_of_birth" class="block mt-1 w-full" type="date" name="date_of_birth" :value="old('date_of_birth')" required autofocus autocomplete="fecha_nacimiento" />
             </div>
 
             <div class="mt-4">
-                <x-label for="telefono" value="{{ __('Telefono') }}" />
-                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus autocomplete="telefono" />
+                <x-label for="phone" value="{{ __('Telefono') }}" />
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
             </div>
 
             <div class="mt-4">
@@ -45,7 +45,7 @@
                     <option>...</option>
                     @foreach ($roles as $rol)
                         <tr>
-                            <option value="{{$rol->id}}">{{$rol->nombre_rol}}</option>
+                            <option value="{{$rol->name}}">{{$rol->name}}</option>
                         </tr>
                     @endforeach
                 </select>

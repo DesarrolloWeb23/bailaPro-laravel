@@ -11,10 +11,17 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Estados;
 use App\Models\Roles;
+use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
+
+    //Roles y permisos
+    use HasRoles;
+
+    //Desactivamos timestamps
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -30,11 +37,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'fecha_nacimiento',
-        'telefono',
-        'estado_id',
+        'date_of_birth',
+        'phone',
+        'state_id',
         'password',
-        'rol_id',
     ];
 
     /**
@@ -73,11 +79,30 @@ class User extends Authenticatable
 
     public function state()
     {
-        return $this->belongsTo(Estados::class, 'estado_id');
+        return $this->belongsTo(State::class, 'state_id');
     }
 
-    public function rol()
+
+    //La relacion hasMany indica que un usuario puede tener muchos academyUser
+    public function academyUsers()
     {
-        return $this->belongsTo(Roles::class, 'rol_id');
+        return $this->hasMany(AcademyUser::class);
+    }
+
+    //La relacion hasMany indica que un usuario puede tener muchas clases-usurios
+    public function claseUser()
+    {
+        return $this->hasMany(ClaseUser::class);
+    }
+
+    //JWT
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

@@ -3,16 +3,17 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Pagos;
+use App\Models\Pay;
 use App\Models\User;
 
 class Payments extends Component
 {
     public $id;
-    public $concepto;
-    public $fecha_pago;
-    public $monto;
-    public $estudiante_id;
+    public $name;
+    public $description;
+    public $date;
+    public $amount;
+    public $student_id;
     public $payments;
     public $paymentId;
     public $students;
@@ -20,19 +21,14 @@ class Payments extends Component
 
     public function mount()
     {
-        $this->payments = Pagos::with('student')->get();
-        $this->students = User::where('rol_id', 1)->get();
-    }
-
-    public function placeholder()
-    {
-        return view('livewire.placeholders.skeleton');
+        $this->payments = Pay::with('user')->get();
+        $this->students = User::role('Estudiante')->get();
     }
 
     public function delete($id)
     {
         try {
-            Pagos::where('id',$id)->delete();
+            Pay::where('id',$id)->delete();
             return $this->redirect('/pym/r',navigate:true); 
         } catch (\Exception $th) {
             dd($th);
@@ -41,24 +37,26 @@ class Payments extends Component
 
     public function edit($id)
     {
-        $payment = Pagos::findOrFail($id);
+        $payment = Pay::findOrFail($id);
 
         $this->paymentId = $payment->id;
-        $this->concepto = $payment->concepto;
+        $this->name = $payment->name;
         $this->fecha_pago = $payment->fecha_pago;
-        $this->monto = $payment->monto;
-        $this->estudiante_id = $payment->user_id;
+        $this->amount = $payment->amount;
+        $this->student_id = $payment->user_id;
     }
 
     public function update()
     {
         try {
-            $payment = Pagos::findOrFail($this->paymentId);
+            $payment = Pay::findOrFail($this->paymentId);
             $payment->update([
-                'concepto' => $this->concepto,
+                'name' => $this->name,
+                'description' => $this->description,
                 'fecha_pago' => $this->fecha_pago,
-                'monto' => $this->monto,
-                'estudiante_id' => $this->estudiante_id
+                'amount' => $this->amount,
+                'user_id' => $this->student_id,
+                'state_id' => 1
             ]);
 
             return $this->redirect('/pym/r', navigate: true);
@@ -70,11 +68,13 @@ class Payments extends Component
     public function save()
     {
         try {
-            Pagos::create([
-                'concepto' => $this->concepto,
-                'fecha_pago' => $this->fecha_pago,
-                'monto' => $this->monto,
-                'user_id' => $this->estudiante_id
+            Pay::create([
+                'name' => $this->name,
+                'description' => $this->description,
+                'date' => $this->date,
+                'amount' => $this->amount,
+                'user_id' => $this->student_id,
+                'state_id' => 1
             ]);
             return $this->redirect('/pym/r',navigate:true); 
         } catch (\Exception $th) {

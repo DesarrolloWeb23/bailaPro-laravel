@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
-class Pagos extends Model
+class ContentType extends Model
 {
     public $timestamps = false; // Desactiva las columnas de marca de tiempo
 
@@ -15,16 +14,7 @@ class Pagos extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
-        'concepto',
-        'fecha_pago',
-        'monto',
-        'user_id'
+        'app_label',
+        'model',
     ];
-
-    //relacion con los estudiantes
-    public function student()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }
