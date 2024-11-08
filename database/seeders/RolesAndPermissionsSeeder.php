@@ -14,7 +14,8 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        //Creamos los roles 
+        //Creamos los roles
+        $superAdminrole = Role::firstOrCreate(['name' => 'SuperAdmin']); 
         $adminrole = Role::firstOrCreate(['name' => 'Administrador']);
         $teacherrole = Role::firstOrCreate(['name' => 'Profesor']);
         $studentrole = Role::firstOrCreate(['name' => 'Estudiante']);
@@ -34,6 +35,19 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'delete-payments']);
 
         //Asignamos los permisos a los roles
+        $superAdminrole->givePermissionTo('create-clases');
+        $superAdminrole->givePermissionTo('edit-clases');
+        $superAdminrole->givePermissionTo('delete-clases');
+        $superAdminrole->givePermissionTo('create-users');
+        $superAdminrole->givePermissionTo('edit-users');
+        $superAdminrole->givePermissionTo('delete-users');
+        $superAdminrole->givePermissionTo('create-inscriptions');
+        $superAdminrole->givePermissionTo('edit-inscriptions');
+        $superAdminrole->givePermissionTo('delete-inscriptions');
+        $superAdminrole->givePermissionTo('create-payments');
+        $superAdminrole->givePermissionTo('edit-payments');
+        $superAdminrole->givePermissionTo('delete-payments');
+
         $adminrole->givePermissionTo('create-clases');
         $adminrole->givePermissionTo('edit-clases');
         $adminrole->givePermissionTo('delete-clases');

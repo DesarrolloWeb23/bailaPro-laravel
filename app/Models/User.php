@@ -78,7 +78,7 @@ class User extends Authenticatable
 
     public function state()
     {
-        return $this->belongsTo(State::class, 'estado_id');
+        return $this->belongsTo(State::class, 'state_id');
     }
 
 

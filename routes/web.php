@@ -8,6 +8,7 @@ use App\Livewire\Students;
 use App\Livewire\Lessons;
 use App\Livewire\Inscriptions;
 use App\Models\Roles;
+use App\Livewire\Dashboard;
 
 
 Route::get('/', function () {
@@ -57,4 +58,10 @@ Route::middleware([
     Route::prefix('ncp')->group(function () {
         Route::get('r', Inscriptions::class)->name('ncp.r'); 
     });
+
+// Prefijo para la dashboard
+    Route::prefix('dsh')->group(function () {
+        Route::get('r', Dashboard::class)->lazy()->name('dsh.r'); 
+    });
+
 });

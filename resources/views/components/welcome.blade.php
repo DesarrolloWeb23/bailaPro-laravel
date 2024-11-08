@@ -11,12 +11,18 @@
         @endrole
         @role('Administrador')
             <!-- Contenido para administradores -->
+            <x-card tittle="Estudiantes" description="Realizar el registro de estudiantes y editar su informacion al igual que la eliminacion de los mismos." ruta="std.r"/>
+            <x-card tittle="Pagos" description="Realizar registro de pagos" ruta="pym.r"/>
+        @endrole
+        @role('SuperAdmin')
+            <!-- Contenido para administradores -->
             <x-card tittle="Usuarios" description="Puedes visualizar el listado de todos los usuario del sistema, realizar nuevos registros, editar la informacion del usuario ó eliminar." ruta="usr.r"/>
             <x-card tittle="Profesores" description="Ver el listado de profesores, realizar el cambio de estado, ingresar informacion ó eliminar profesores." ruta="tch.r"/>
             <x-card tittle="Estudiantes" description="Realizar el registro de estudiantes y editar su informacion al igual que la eliminacion de los mismos." ruta="std.r"/>
             <x-card tittle="Pagos" description="Realizar registro de pagos" ruta="pym.r"/>
             <x-card tittle="Clases" description="Realizar registro de clases, eliminar o editarlas" ruta="lsn.r"/>
             <x-card tittle="Inscripcciones" description="Ver el listado de incripciones que se han realizado e inscribir a algun estudiante a una clase que ya se encuentre creada" ruta="ncp.r"/> 
+            <x-card tittle="Panel administador" description="" ruta="dsh.r"/> 
         @endrole
     @else
     <div>Usted se encuentra en estado PRE-REGISTRO, por favor comuniquese con su administrador</div>
