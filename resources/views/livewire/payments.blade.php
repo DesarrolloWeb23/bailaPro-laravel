@@ -86,16 +86,16 @@
                                     {{$payment->id}}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                    {{$payment->concepto}}
+                                    {{$payment->name}}
                                 </th>
                                 <th  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                    {{$payment->fecha_pago}}
+                                    {{$payment->date}}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                    {{$payment->monto}}
+                                    {{$payment->amount}}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                    {{ $payment->student ? $payment->student->name : 'Estudiante no encontrado' }}
+                                    {{ $payment->user ? $payment->user->name : 'Estudiante no encontrado' }}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                                     <x-danger-button wire:click="delete({{ $payment->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

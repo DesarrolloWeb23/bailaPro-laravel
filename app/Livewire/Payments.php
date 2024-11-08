@@ -21,7 +21,7 @@ class Payments extends Component
 
     public function mount()
     {
-        $this->payments = Pay::with('student')->get();
+        $this->payments = Pay::with('user')->get();
         $this->students = User::role('Estudiante')->get();
     }
 
@@ -55,7 +55,8 @@ class Payments extends Component
                 'description' => $this->description,
                 'fecha_pago' => $this->fecha_pago,
                 'amount' => $this->amount,
-                'user_id' => $this->student_id
+                'user_id' => $this->student_id,
+                'state_id' => 1
             ]);
 
             return $this->redirect('/pym/r', navigate: true);
@@ -72,7 +73,8 @@ class Payments extends Component
                 'description' => $this->description,
                 'date' => $this->date,
                 'amount' => $this->amount,
-                'user_id' => $this->student_id
+                'user_id' => $this->student_id,
+                'state_id' => 1
             ]);
             return $this->redirect('/pym/r',navigate:true); 
         } catch (\Exception $th) {
