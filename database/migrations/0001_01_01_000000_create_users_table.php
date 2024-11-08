@@ -34,8 +34,8 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->timestamp('date_of_birth')->nullable();
-            $table->string('phone');
+            $table->date('date_of_birth')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamp('hiring_date')->nullable();
             $table->string('specialty_id')->references('id')->on('specialties')->nullable();;
             $table->foreignId('state_id')->references('id')->on('states');

@@ -18,20 +18,18 @@ class UserFilter extends ApiFilter
         'id'     => ['eq', 'ne'],
         'name'   => ['eq', 'ne'],
         'email'  => ['eq', 'ne'],
-        'state'  => ['eq', 'ne'],
+        'role'  => ['eq', 'ne'],
         'phone'  => ['eq', 'ne'],
-        'role'   => ['eq', 'ne'],
-        'especialidad'   => ['eq', 'ne','lt'],
+        'state'  => ['eq', 'ne'],
     ]; //Parametros para filtros de modelos
     protected $columMap     = [
-        'id'  => 'id',
-        'name' =>'name',
-        'email'=>'email',
-        'state'=>'estado_id',
-        'phone'=>'telefono',
-        'role' =>'rol_id',
-        'date_birth' =>'fecha_nacimiento',
-        'password' =>'password'
+        // 'id'  => 'id',
+        'name' => 'name',
+        'email' => 'email',
+        'state' => 'state_id',
+        'phone' => 'phone',
+        'date_birth' => 'date_of_birth',
+        'password' => 'password'
     ]; //Mapea las columnas a como queremos que se filtren
 
 
