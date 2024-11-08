@@ -11,6 +11,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         {{-- Icon --}}
         <link rel='icon' type='image/ico' href="{{ asset('img/Logo.jpg')}}">
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -21,83 +22,111 @@
             </style>
         @endif
     </head>
-    <body class="font-sans antialiased">
-        <div class="bg-gray-50 text-black/50" style="background: linear-gradient(90deg, rgba(224, 183, 189, 1) 0%, rgba(244, 175, 176, 1) 100%);">
-            <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-                <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-                        <div class="flex lg:justify-center lg:col-start-2">
-                            <a href="{{ url('/dashboard') }}">
-                                <img
-                                    src="{{ asset('img/Logo.jpg')}}"
-                                    alt="Logo"
-                                    class="h-20 w-auto"
-                                    style="border-radius: 10px;"
-                                />
-                            </a>
-                        </div>
+    <body class="font-sans antialiased bg-gray-100">
+        <header>
+            <nav class="border-gray-200 dark:bg-gray-900" style="background: linear-gradient(90deg, rgba(224, 183, 189, 1) 0%, rgba(191, 111, 163) 100%);">
+                <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                    <a href="{{ url('/dashboard') }}">
+                        <img
+                            src="{{ asset('img/Logo.jpg')}}"
+                            alt="Logo"
+                            class="h-20 w-auto"
+                            style="border-radius: 10px;"
+                        />
+                    </a>
+                    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+                        <span class="sr-only">Abrir menu principal</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                        </svg>
+                    </button>
+                    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                        <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <li>
+                            <a href="#" class="lock py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#6360BF] md:p-0 dark:text-white md:dark:hover:text-[blue-500] dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#6360BF] md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Nosotros</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#6360BF] md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Servicios</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#6360BF] md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Precios</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#6360BF] md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contactanos</a>
+                        </li>
                         @if (Route::has('login'))
-                            <nav class="-mx-3 flex flex-1 justify-end">
-                                @auth
-                                    <a
-                                        href="{{ url('/dashboard') }}"
-                                        class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                                    >
-                                        Panel de control
-                                    </a>
-                                @else
-                                    <a
-                                        href="{{ route('login') }}"
-                                        class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                            @auth
+                            <li>
+                                <a href="{{ url('/dashboard') }}"
+                                    class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#6360BF] md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                >
+                                    Panel de control
+                                </a>
+                            </li>
+                            @else
+                                <li>
+                                    <a href="{{ route('login') }}"
+                                        class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                                     >
                                         Iniciar sesion
                                     </a>
-
-                                    @if (Route::has('register'))
-                                        <a
-                                            href="{{ route('register') }}" wire:navigate
-                                            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                                        >
-                                            Registrarse
-                                        </a>
-                                    @endif
-                                @endauth
-                            </nav>
+                                </li>
+                                @if (Route::has('register'))
+                                <li>
+                                    <a href="{{ route('register') }}" wire:navigate
+                                    class="block py-2 p-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                >
+                                    Registrarse
+                                </a>
+                                </li>
+                                @endif
+                            @endauth
                         @endif
-                    </header>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
-                    <main class="mt-6">
-                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <div 
-                                class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10"
-                            >
-                                <h1>Optimiza tu Academia de Baile con Nuestro Sistema de Gestión Integral</h1>
-                                <p>Bienvenido al software que transformará la forma en que administras tu academia de baile. Diseñado pensando en las necesidades únicas de las academias de danza, nuestro sistema de gestión te ofrece una plataforma integral y fácil de usar que te permite enfocarte en lo que realmente importa: brindar una experiencia excepcional a tus estudiantes.</p>
-                                <h1>¿Por qué elegir nuestro sistema?</h1>
-                                <p>Elegir nuestro software significa reducir el tiempo y esfuerzo invertido en tareas administrativas para dedicarlo a lo que más te apasiona: el baile y la enseñanza. Nuestro sistema de gestión te permitirá ofrecer una experiencia de calidad tanto para el equipo de profesores como para los estudiantes y sus familias.</p>
-                        </div>
+        <main class="mt-6 mx-10">
+            <div class="grid my-10">
+                <h1 class="font-bold text-2xl decoration-solid">BailaPro</h1>
+                <div class="grid-cols-2 border-4" style="border-color: #6360BF"></div>
+            </div>
+            <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
+                <div 
+                    class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10"
+                >
+                    <h1>Optimiza tu Academia de Baile con Nuestro Sistema de Gestión Integral</h1>
+                    <p>Bienvenido al software que transformará la forma en que administras tu academia de baile. Diseñado pensando en las necesidades únicas de las academias de danza, nuestro sistema de gestión te ofrece una plataforma integral y fácil de usar que te permite enfocarte en lo que realmente importa: brindar una experiencia excepcional a tus estudiantes.</p>
+                    <h1>¿Por qué elegir nuestro sistema?</h1>
+                    <p>Elegir nuestro software significa reducir el tiempo y esfuerzo invertido en tareas administrativas para dedicarlo a lo que más te apasiona: el baile y la enseñanza. Nuestro sistema de gestión te permitirá ofrecer una experiencia de calidad tanto para el equipo de profesores como para los estudiantes y sus familias.</p>
+            </div>
 
-                            <div
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10"
-                            >
-                                <p>Este software es una solución completa que reúne todas las herramientas necesarias para organizar y simplificar la administración de tu academia. Desde la gestión de estudiantes y clases hasta el control de pagos y reportes, cada módulo ha sido creado para ayudarte a tener un manejo profesional, ordenado y eficiente de tu academia.</p>
-                            </div>
+                <div
+                    class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10"
+                >
+                    <p>Este software es una solución completa que reúne todas las herramientas necesarias para organizar y simplificar la administración de tu academia. Desde la gestión de estudiantes y clases hasta el control de pagos y reportes, cada módulo ha sido creado para ayudarte a tener un manejo profesional, ordenado y eficiente de tu academia.</p>
+                </div>
 
 
 
-                            <div class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10">
-                                <div class="pt-3 sm:pt-5">
-                                    <p>ByteCreaColombia es una empresa de tecnología colombiana dedicada al desarrollo de soluciones innovadoras para el crecimiento y la eficiencia de empresas y emprendimientos. Con una visión moderna y un enfoque en la transformación digital, ByteCreaColombia se especializa en crear software personalizado para facilitar la administración y gestión de negocios. Cada uno de nuestros productos está diseñado con altos estándares de calidad, adaptándose a las necesidades únicas de cada sector, como el educativo, artístico y comercial. En ByteCreaColombia, creemos en el poder de la tecnología para impulsar el éxito de nuestros clientes, ofreciendo soluciones confiables, intuitivas y accesibles.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-
-                    <footer class="py-16 text-center text-sm text-rose-100">
-                        © TODOS LOS DERECHOS RESERVADOS - ByteCreaColombia
-                    </footer>
+                <div class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10">
+                    <div class="pt-3 sm:pt-5">
+                        <p>ByteCreaColombia es una empresa de tecnología colombiana dedicada al desarrollo de soluciones innovadoras para el crecimiento y la eficiencia de empresas y emprendimientos. Con una visión moderna y un enfoque en la transformación digital, ByteCreaColombia se especializa en crear software personalizado para facilitar la administración y gestión de negocios. Cada uno de nuestros productos está diseñado con altos estándares de calidad, adaptándose a las necesidades únicas de cada sector, como el educativo, artístico y comercial. En ByteCreaColombia, creemos en el poder de la tecnología para impulsar el éxito de nuestros clientes, ofreciendo soluciones confiables, intuitivas y accesibles.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+        
+        <footer class="py-16 text-center text-sm text-rose-100">
+            © TODOS LOS DERECHOS RESERVADOS - ByteCreaColombia
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
     </body>
 </html>

@@ -14,7 +14,7 @@ class Pay extends Model
         'amount',
         'user_id',
         'state_id',
-
+        'date'
     ];
 
     //La relacion BelongsTo indica que un pago pertenece a un usuario

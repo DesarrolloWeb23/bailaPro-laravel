@@ -14,13 +14,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = User::firstOrNew([
-            'email' => 'admin@gmail.com',
+            'email' => env('ADMIN_EMAIL', 'admin@gmail.com'),
         ], [
-            'name' => 'Administrador',
-            'password' => bcrypt('admin123'),
-            'date_of_birth' => '1990-01-01',
-            'phone' => '1234567890',
-            'state_id' => 1,
+            'name' => env('ADMIN_NAME', 'Administrador'),
+            'password' => bcrypt(env('ADMIN_PASSWORD', 'admin123')),
+            'date_of_birth' => env('ADMIN_DATE_OF_BIRTH', '1990-01-01'),
+            'phone' => env('ADMIN_PHONE', '1234567890'),
+            'state_id' => env('ADMIN_STATE_ID', 1),
         ]);
 
         // Si el usuario no existe, se guardará.
@@ -29,6 +29,6 @@ class UserSeeder extends Seeder
         }
 
         // Asignar el rol al usuario
-        $user->assignRole('Administrador');
+        $user->assignRole('SuperAdmin');
     }
 }
