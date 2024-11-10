@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\ClaseUser;
 use App\Models\Inscripciones;
 
 class Clases extends Model
@@ -15,14 +16,11 @@ class Clases extends Model
      *
      * @var array<int, string>
      */
-
-    protected $table = 'clases';
-
     protected $fillable = [
         'name',
         'description',
         'duration',
-        'shedule',
+        'schedule',
         'capacity',
         'start_date',
         'end_date',
@@ -30,9 +28,25 @@ class Clases extends Model
         'state_id',
     ];
 
-    //La relacion hasMany indica que una clase puede tener muchas clases-usurios
-    public function claseUser()
+    public function academy()
     {
-        return $this->hasMany(ClaseUser::class);
+        return $this->belongsTo(Academy::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function inscriptions()
+    {
+        return $this->hasMany(ClaseUser::class, 'clase_id');
+    }
+
+    public static function inscriptionsByStudent($studentId)
+    {
+        return self::whereHas('inscriptions', function($query) use ($studentId) {
+            $query->where('user_id', $studentId);
+        })->get();
     }
 }
