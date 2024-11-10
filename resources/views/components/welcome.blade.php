@@ -13,6 +13,7 @@
             <!-- Contenido para administradores -->
             <x-card tittle="Estudiantes" description="Realizar el registro de estudiantes y editar su informacion al igual que la eliminacion de los mismos." ruta="std.r"/>
             <x-card tittle="Pagos" description="Realizar registro de pagos" ruta="pym.r"/>
+            <x-card tittle="Clases" description="Realizar registro de clases, eliminar o editarlas" ruta="lsn.r"/>
         @endrole
         @role('SuperAdmin')
             <!-- Contenido para administradores -->

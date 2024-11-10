@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Roles;
 use App\Models\State;
 use App\Actions\Fortify\CreateNewUser;
+use App\Models\Academy;
+use App\Models\AcademyUser;
 
 class Usuarios extends Component
 {
@@ -23,6 +25,8 @@ class Usuarios extends Component
     public $rol_id;
     public $usuarioId;
     public $states;
+    public $academies;
+    public $academyId;
 
     public function mount()
     {
@@ -30,6 +34,7 @@ class Usuarios extends Component
         $this->users = User::with('state','roles')->get();
         $this->roles = Roles::all();
         $this->states = State::all();
+        $this->academies = Academy::all();
     }
 
     public function register()
@@ -85,6 +90,7 @@ class Usuarios extends Component
         try {
             // Crear una instancia de CreateNewUser
             $creator = new CreateNewUser();
+            $sessionUser = auth()->user()->id;
 
         
             $creator->create([
@@ -97,7 +103,20 @@ class Usuarios extends Component
                 'password_confirmation' => $this->password_confirmation,
                 'rol_id' => $this->rol_id
             ]);
-            return $this->redirect('/usr/r',navigate:true); 
+
+            //valida si el usuario de la  sesion es rol SuperAdmin y crear la relacion del usuario con la academia
+            if (User::find($sessionUser)->hasRole('SuperAdmin')){
+                $creator = new AcademyUser();
+                $creator->create([
+                    'academy_id' => $this->academyId,
+                    'user_id' => User::latest()->first()->id
+                ]);
+            }
+
+            $this->users = User::with('state','roles')->get();
+            $this->reset();
+            session()->flash('message', 'Usuario creado correctamente.');
+
         } catch (\Exception $th) {
             dd($th);
         }
