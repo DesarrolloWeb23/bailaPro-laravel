@@ -7,6 +7,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\State;
+use App\Models\Academy;
 
 class Dashboard extends Component
 {
@@ -26,6 +27,9 @@ class Dashboard extends Component
 
     public $totalUsers;
     public $totalRoles;
+    public $totalPermissions;
+    public $totalStates;
+    public $totalAcademies;
 
     public function mount()
     {
@@ -36,6 +40,9 @@ class Dashboard extends Component
         
         $this->totalUsers = User::count();
         $this->totalRoles = Role::count();
+        $this->totalPermissions = Permission::count();
+        $this->totalStates = State::count();
+        $this->totalAcademies = Academy::count();
     }
 
     public function placeholder()

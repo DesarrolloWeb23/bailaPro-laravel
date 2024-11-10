@@ -30,6 +30,33 @@ class Roles extends Component
         }
     }
 
+    public function edit($id)
+    {
+        $rol = Role::findOrFail($id);
+
+        $this->rolId = $rol->id;
+        $this->name = $rol->name;
+        $this->guard_name = $rol->guard_name;
+    }
+
+    public function update()
+    {
+        try {
+            Role::where('id', $this->rolId)->update([
+                'name' => $this->name,
+                'guard_name' => $this->guard_name,
+                'updated_at' => now()
+            ]);
+
+            $this->roles = Role::all();
+            $this->reset(['name', 'guard_name']);
+            session()->flash('message', 'Rol actualizado correctamente.');
+
+        } catch (\Exception $th) {
+            dd($th);
+        }
+    }
+
     public function save()
     {
         try {

@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\ClaseUser;
-use App\Models\Clases;
+use App\Models\Lesson;
 use App\Models\User;
 
 class Lessons extends Component
@@ -31,14 +31,14 @@ class Lessons extends Component
         if (User::find($sessionUser)->hasRole('Estudiante')) {
             //traer las clases del estudiante
             //$this->lessons = ClaseUser::with('user')->with('Estudiante')->get();
-            $this->lessons = Clases::inscriptionsByStudent($sessionUser);
+            $this->lessons = Lesson::inscriptionsByStudent($sessionUser);
         }
         if (User::find($sessionUser)->hasRole('Profesor')) {
             $this->lessons = ClaseUser::where('user_id', $sessionUser )->with('teacher')->get();
         }
         else if (User::find($sessionUser)->hasRole('Administrador|SuperAdmin')){
-            //$this->lessons = Clases::inscriptionsByStudent($sessionUser);
-            //$this->lessons = Clases::with('inscriptions')->get();
+            //$this->lessons = Lesson::inscriptionsByStudent($sessionUser);
+            //$this->lessons = Lesson::with('inscriptions')->get();
 
         } 
         
@@ -91,7 +91,7 @@ class Lessons extends Component
     public function save()
     {
         try {
-            Clases::create([
+            Lesson::create([
                 'name'=> $this->name,
                 'description'=> $this->description,
                 'duration'=> $this->duration,
@@ -99,7 +99,8 @@ class Lessons extends Component
                 'schedule'=> $this->schedule,
                 'start_date'=> $this->start_date,
                 'end_date'=> $this->end_date,
-                'state_id'=> 1
+                'state_id'=> 1,  
+                'academy_id'=> auth()->user()->academy_id,
             ]);
             return $this->redirect('/lsn/r',navigate:true); 
         } catch (\Exception $th) {
