@@ -61,7 +61,8 @@ Route::middleware([
 
 // Prefijo para la dashboard
     Route::prefix('dsh')->group(function () {
-        Route::get('r', Dashboard::class)->lazy()->name('dsh.r'); 
+        Route::get('r', Dashboard::class)->lazy()->name('dsh.r');
+        Route::post('usr/c', [Dashboard::class, 'saveUser'])->name('usr/c'); // Crear usuario
     });
 
 });

@@ -5,18 +5,18 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Roles;
-use App\Models\Estados;
+use App\Models\State;
 use App\Actions\Fortify\CreateNewUser;
 
 class Usuarios extends Component
 {
-    public $usuarios;
+    public $users;
     public $roles;
     public $name;
     public $email;
-    public $fecha_nacimiento;
-    public $telefono;
-    public $estado_id;
+    public $date_of_birth;
+    public $phone;
+    public $state_id;
     public $especialidad_id;
     public $password;
     public $password_confirmation;
@@ -27,9 +27,9 @@ class Usuarios extends Component
     public function mount()
     {
         //traer la informacion del modelo y guardarla en la variable usuarios
-        $this->usuarios = User::with('state','rol')->get();
+        $this->users = User::with('state','roles')->get();
         $this->roles = Roles::all();
-        $this->states = Estados::all();
+        $this->states = State::all();
     }
 
     public function register()
@@ -55,9 +55,9 @@ class Usuarios extends Component
         $this->name = $usuario->name;
         $this->email = $usuario->email;
         $this->rol_id = $usuario->rol_id;
-        $this->telefono = $usuario->telefono;
-        $this->fecha_nacimiento = $usuario->fecha_nacimiento;
-        $this->estado_id = $usuario->estado_id;
+        $this->phone = $usuario->phone;
+        $this->date_of_birth = $usuario->date_of_birth;
+        $this->state_id = $usuario->state_id;
     }
 
     public function update()
@@ -68,10 +68,10 @@ class Usuarios extends Component
                 'name' => $this->name,
                 'email' => $this->email,
                 'rol_id' => $this->rol_id,
-                //'password' => bcrypt($this->password) // Opcional: solo si se desea actualizar la contraseña
-                'telefono' => $this->telefono,
-                'fecha_nacimiento' => $this->fecha_nacimiento,
-                'estado_id' => $this->estado_id
+                'password' => bcrypt($this->password),
+                'phone' => $this->phone,
+                'date_of_birth' => $this->date_of_birth,
+                'state_id' => $this->state_id
             ]);
 
             return $this->redirect('/usr/r', navigate: true);
@@ -90,9 +90,9 @@ class Usuarios extends Component
             $creator->create([
                 'name' => $this->name,
                 'email' => $this->email,
-                'fecha_nacimiento' => $this->fecha_nacimiento,
-                'telefono' => $this->telefono,
-                'estado_id' => $this->estado_id,
+                'date_of_birth' => $this->date_of_birth,
+                'phone' => $this->phone,
+                'state_id' => $this->state_id,
                 'password' => $this->password,
                 'password_confirmation' => $this->password_confirmation,
                 'rol_id' => $this->rol_id

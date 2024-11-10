@@ -109,31 +109,7 @@
     <div class="p-4 sm:ml-64">
         @switch($view)
             @case('users')
-                <x-section-table name="Listado de usuarios">
-                    <x-slot name="slot">
-                        <x-table :headers="['ID', 'ROL', 'NOMBRE COMPLETO', 'EMAIL', 'ESTADO', 'ACCIONES']">
-                            @foreach ($users as $usuario)
-                                <tr>
-                                    <td class="px-6 py-4">{{ $usuario->id }}</td>
-                                    <td class="px-6 py-4">
-                                        @forelse ($usuario->roles as $role)
-                                            <span class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ $role->name }}</span>
-                                        @empty
-                                            <span>Rol no encontrado</span>
-                                        @endforelse
-                                    </td>
-                                    <td class="px-6 py-4">{{ $usuario->name }}</td>
-                                    <td class="px-6 py-4">{{ $usuario->email }}</td>
-                                    <td class="px-6 py-4">{{ $usuario->state ? $usuario->state->name : 'Estudiante no encontrado' }}</td>
-                                    <td class="px-6 py-4">
-                                        <x-danger-button wire:click="delete({{ $usuario->id }})">Eliminar</x-danger-button>
-                                        <button wire:click="edit({{ $usuario->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
-                    </x-slot>
-                </x-section-table>
+                @livewire('usuarios')
                 @break
 
             @case('roles')
