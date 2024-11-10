@@ -16,6 +16,7 @@ class Academy extends Model
         'address',
         'phone',
         'email',
+        'state_id',
         'rating',
     ];
 
