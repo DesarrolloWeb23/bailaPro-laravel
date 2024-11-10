@@ -113,23 +113,7 @@
                 @break
 
             @case('roles')
-                <x-section-table name="Listado de roles">
-                    <x-slot name="slot">
-                        <x-table :headers="['ID', 'NOMBRE', 'AUTENTICACION','ACCIONES']">
-                            @foreach ($roles as $rol)
-                                <tr>
-                                    <td class="px-6 py-4">{{ $rol->id }}</td>
-                                    <td class="px-6 py-4">{{ $rol->name }}</td>
-                                    <td class="px-6 py-4">{{ $rol->guard_name }}</td>
-                                    <td class="px-6 py-4">
-                                        <x-danger-button wire:click="delete({{ $rol->id }})">Eliminar</x-danger-button>
-                                        <button wire:click="edit({{ $rol->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
-                    </x-slot>
-                </x-section-table>
+                @livewire('roles')
                 @break
 
                 @case('permissions')
