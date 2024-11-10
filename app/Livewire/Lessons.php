@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\ClaseUser;
 use App\Models\Lesson;
 use App\Models\User;
+use App\Models\AcademyUser;
 
 class Lessons extends Component
 {
@@ -34,11 +35,11 @@ class Lessons extends Component
             $this->lessons = Lesson::inscriptionsByStudent($sessionUser);
         }
         if (User::find($sessionUser)->hasRole('Profesor')) {
-            $this->lessons = ClaseUser::where('user_id', $sessionUser )->with('teacher')->get();
+            $this->lessons = ClaseUser::where('user_id', $sessionUser )->with('teachers')->get();
         }
         else if (User::find($sessionUser)->hasRole('Administrador|SuperAdmin')){
-            //$this->lessons = Lesson::inscriptionsByStudent($sessionUser);
-            //$this->lessons = Lesson::with('inscriptions')->get();
+            //me consulta todas las lessons creeadas por la academia del usuario que inicio sesion
+            $this->lessons = Lesson::where('academy_id', AcademyUser::where('user_id', $sessionUser)->first()->academy_id)->with('teachers')->get();
 
         } 
         
@@ -72,14 +73,17 @@ class Lessons extends Component
     public function update()
     {
         try {
-            $lesson = ClaseUser::findOrFail($this->lessonId);
+            $lesson = Lesson::findOrFail($this->lessonId);
             $lesson->update([
                 'name' => $this->name,
                 'description'=> $this->description,
-                'duration' => $this->duration,
-                'schedule' => $this->schedule,
-                'capacity'=> $this->capacity,
-                'profesor_id' => $this->profesor_id
+                'duration'=> $this->duration,
+                'schedule'=> $this->schedule,
+                'capacity'=> $this->capacity
+            ]);
+
+            TeacherLesson::where('lesson_id', $this->lessonId)->update([
+                'user_id'=> $this->teacherId
             ]);
 
             return $this->redirect('/lsn/r', navigate: true);
@@ -91,6 +95,7 @@ class Lessons extends Component
     public function save()
     {
         try {
+            $academyUser = AcademyUser::where('user_id', auth()->user()->id)->first();
             Lesson::create([
                 'name'=> $this->name,
                 'description'=> $this->description,
@@ -100,9 +105,17 @@ class Lessons extends Component
                 'start_date'=> $this->start_date,
                 'end_date'=> $this->end_date,
                 'state_id'=> 1,  
-                'academy_id'=> auth()->user()->academy_id,
+                'academy_id'=> $academyUser->academy_id,
             ]);
-            return $this->redirect('/lsn/r',navigate:true); 
+
+            TeacherLesson::create([
+                'lesson_id'=> Lesson::latest()->first()->id,
+                'user_id'=> $this->teacherId,
+            ]);
+
+            $this->lessons = Lesson::all();
+            $this->reset();
+            session()->flash('message', 'Clase creada correctamente.');
         } catch (\Exception $th) {
             dd($th);
         }

@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->date('inscription_date')->nullable();
         });
 
         Schema::create('student_lessons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->date('inscription_date');
         });
 
         Schema::create('precenses', function (Blueprint $table) {

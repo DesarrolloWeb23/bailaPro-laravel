@@ -58,7 +58,19 @@
                     @endforeach
                 </select>
             </div>
-            
+            @role('SuperAdmin')
+                <div class="relative z-0 w-full mb-5 group">
+                    <label for="academia_id" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent">Selecciona una academia</label>
+                    <select id="academia_id" name="academia_id" wire:model="academyId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option>...</option>
+                        @foreach ($academies as $academy)
+                            <tr>
+                                <option value="{{$academy->id}}">{{$academy->name}}</option>
+                            </tr>
+                        @endforeach
+                    </select>
+                </div>
+            @endrole
             <x-button class="ms-4" wire:click.prevent="{{ $usuarioId ? 'update' : 'save' }}">
                 {{ $usuarioId ? __('Actualizar') : __('Registrar') }}
             </x-button>
