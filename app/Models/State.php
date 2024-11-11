@@ -15,4 +15,9 @@ class State extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    // public function academies()
+    // {
+    //     return $this->hasMany(Academy::class);
+    // }
 }
