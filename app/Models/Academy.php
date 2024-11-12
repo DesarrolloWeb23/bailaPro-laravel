@@ -20,6 +20,13 @@ class Academy extends Model
         'rating',
     ];
 
+
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+
     //La relacion hasMany indica que una academia puede tener muchos usuarios-academia
     public function academyUser()
     {
