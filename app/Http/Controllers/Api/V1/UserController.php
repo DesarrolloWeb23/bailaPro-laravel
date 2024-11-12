@@ -10,7 +10,7 @@ use App\Http\Requests\Api\V1\Update\UserUpdateRequest;
 use App\Http\Resources\Api\V1\Collections\UserCollection;
 use App\Http\Resources\Api\V1\Resources\UserResource;
 use App\Models\User;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -49,8 +49,14 @@ class UserController extends Controller
     public function show(int $id)
     {
         try {
+
             $user = User::findOrFail($id);
             return new UserResource($user);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Academia no encontrada.',
+            ], 404);
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => true,
