@@ -9,6 +9,8 @@ use App\Livewire\Lessons;
 use App\Livewire\Inscriptions;
 use App\Livewire\Roles;
 use App\Livewire\Dashboard;
+use App\Models\Role;
+
 
 
 Route::get('/', function () {
@@ -16,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/register', function () {
-    return view('auth.register', ['roles' => Roles::all()]);
+    return view('auth.register', ['roles' => Role::all()]);
 })->name('register');
 
 Route::middleware([
