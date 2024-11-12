@@ -4,6 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\AcademyUser;
+use App\Models\State;
+use App\Models\Role;
 
 class Students extends Component
 {
@@ -15,10 +18,29 @@ class Students extends Component
     public $phone;
     public $students;
     public $studentId;
+    public $state_id;
+    public $rol_id;
+    public $states;
+    public $roles;
+    public $sessionUser;
 
     public function mount()
     {
-        $this->students = User::role('Estudiante')->get();
+        $this->sessionUser = auth()->user()->id;
+        $academyId = AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id;
+
+        //realiza la consulta de los estudiantes de la academia del usuario que inicio sesion
+        $this->students = User::role('Estudiante')->whereHas('state', function ($query) {
+            $query->where('id', '1'); // Filtra para el estado activo
+        })
+        ->whereHas('academyUsers.academy', function ($query) use ($academyId) {
+            $query->where('id', $academyId); // Filtra por el ID de la academia específica
+        })
+        ->with('academyUsers.academy','state')
+        ->get();
+
+        $this->states = State::all();
+        $this->roles = Role::where('name', 'Estudiante')->get();
     }
 
     public function delete($id)
@@ -40,6 +62,7 @@ class Students extends Component
         $this->date_of_birth = $student->date_of_birth;
         $this->name = $student->name;
         $this->phone = $student->phone;
+        $this->state_id = $student->state_id;
     }
 
     public function update()
@@ -62,17 +85,25 @@ class Students extends Component
     public function save()
     {
         try {
-            User::create([
+            $user = User::create([
                 'email' => $this->email,
                 'date_of_birth' => $this->date_of_birth,
                 'created_at' => now(),
                 'password' => bcrypt('password'),
                 'password_confirmation' => bcrypt('password'),
-                'state_id' => 1,
-                'role_id' => 4,
+                'state_id' => $this->state_id,
+                'role_id' => $this->rol_id,
                 'name' => $this->name,
                 'phone' => $this->phone
             ]);
+
+            $user->assignRole($this->rol_id);
+
+            AcademyUser::create([
+                'academy_id'=> AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id,
+                'user_id'=> User::latest()->first()->id,
+            ]);
+
             return $this->redirect('/std/r',navigate:true); 
         } catch (\Exception $th) {
             dd($th);

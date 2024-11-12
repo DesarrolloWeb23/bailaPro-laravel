@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Roles;
+use App\Models\Role;
 use App\Models\State;
 use App\Actions\Fortify\CreateNewUser;
 use App\Models\Academy;
@@ -32,14 +32,14 @@ class Usuarios extends Component
     {
         //traer la informacion del modelo y guardarla en la variable usuarios
         $this->users = User::with('state','roles')->get();
-        $this->roles = Roles::all();
+        $this->roles = Role::all();
         $this->states = State::all();
         $this->academies = Academy::all();
     }
 
     public function register()
     {
-        return view('auth.register', ['roles' => Roles::all(),]);
+        return view('auth.register', ['roles' => Role::all(),]);
     }
 
     public function delete($id)
@@ -88,21 +88,19 @@ class Usuarios extends Component
     public function save()
     {
         try {
-            // Crear una instancia de CreateNewUser
-            $creator = new CreateNewUser();
             $sessionUser = auth()->user()->id;
 
-        
-            $creator->create([
+            $user = User::create([
                 'name' => $this->name,
                 'email' => $this->email,
                 'date_of_birth' => $this->date_of_birth,
                 'phone' => $this->phone,
                 'state_id' => $this->state_id,
                 'password' => $this->password,
-                'password_confirmation' => $this->password_confirmation,
-                'rol_id' => $this->rol_id
+                'password_confirmation' => $this->password_confirmation
             ]);
+
+            $user->assignRole($this->rol_id);
 
             //valida si el usuario de la  sesion es rol SuperAdmin y crear la relacion del usuario con la academia
             if (User::find($sessionUser)->hasRole('SuperAdmin')){
@@ -114,7 +112,7 @@ class Usuarios extends Component
             }
 
             $this->users = User::with('state','roles')->get();
-            $this->reset();
+            $this->reset('name','email','date_of_birth','phone','state_id','password','password_confirmation','rol_id');
             session()->flash('message', 'Usuario creado correctamente.');
 
         } catch (\Exception $th) {
