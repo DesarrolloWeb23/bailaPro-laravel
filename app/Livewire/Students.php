@@ -9,16 +9,16 @@ class Students extends Component
 {
     public $id;
     public $email;
-    public $fecha_nacimiento;
+    public $date_of_birth;
     public $fecha_registro;
     public $name;
-    public $telefono;
+    public $phone;
     public $students;
     public $studentId;
 
     public function mount()
     {
-        $this->students = User::where('rol_id', 1)->get();
+        $this->students = User::role('Estudiante')->get();
     }
 
     public function delete($id)
@@ -37,9 +37,9 @@ class Students extends Component
 
         $this->studentId = $student->id;
         $this->email = $student->email;
-        $this->fecha_nacimiento = $student->fecha_nacimiento;
+        $this->date_of_birth = $student->date_of_birth;
         $this->name = $student->name;
-        $this->telefono = $student->telefono;
+        $this->phone = $student->phone;
     }
 
     public function update()
@@ -48,9 +48,9 @@ class Students extends Component
             $student = User::findOrFail($this->studentId);
             $student->update([
                 'email' => $this->email,
-                'fecha_nacimiento' => $this->fecha_nacimiento,
+                'date_of_birth' => $this->date_of_birth,
                 'name' => $this->name,
-                'telefono' => $this->telefono
+                'phone' => $this->phone
             ]);
 
             return $this->redirect('/std/r', navigate: true);
@@ -64,10 +64,14 @@ class Students extends Component
         try {
             User::create([
                 'email' => $this->email,
-                'fecha_nacimiento' => $this->fecha_nacimiento,
-                'fecha_registro' => now(),
+                'date_of_birth' => $this->date_of_birth,
+                'created_at' => now(),
+                'password' => bcrypt('password'),
+                'password_confirmation' => bcrypt('password'),
+                'state_id' => 1,
+                'role_id' => 4,
                 'name' => $this->name,
-                'telefono' => $this->telefono
+                'phone' => $this->phone
             ]);
             return $this->redirect('/std/r',navigate:true); 
         } catch (\Exception $th) {

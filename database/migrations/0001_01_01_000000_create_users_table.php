@@ -24,6 +24,17 @@ return new class extends Migration
             $table->string('description');
         });
 
+        Schema::create('academies', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('state_id')->references('id')->on('states');
+            $table->string('name');
+            $table->string('description');
+            $table->string('address');
+            $table->string('phone');
+            $table->string('email');
+            $table->integer('rating');
+        });
+
         //=============================> Tabla Usuarios <=============================
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -40,11 +51,13 @@ return new class extends Migration
             $table->string('specialty_id')->references('id')->on('specialties')->nullable();;
             $table->foreignId('state_id')->references('id')->on('states');
             $table->timestamps();
+            $table->string('eps')->nullable();
         });
 
         //=============================> Tabla Clases <=============================
-        Schema::create('clases', function (Blueprint $table) {
+        Schema::create('lessons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('academy_id')->references('id')->on('academies');
             $table->string('name');
             $table->string('description');
             $table->string('duration');

@@ -11,10 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clase_users', function (Blueprint $table) {
+        Schema::create('teacher_lessons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('clase_id')->constrained('clases')->onDelete('cascade');
+            $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        });
+
+        Schema::create('student_lessons', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->date('inscription_date');
+        });
+
+        Schema::create('precenses', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -23,6 +37,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clase_users');
+        Schema::dropIfExists('teacher_lessons');
+        Schema::dropIfExists('student_lessons');
+        Schema::dropIfExists('precenses');
     }
 };

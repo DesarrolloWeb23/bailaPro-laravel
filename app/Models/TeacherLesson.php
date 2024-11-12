@@ -4,23 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClaseUser extends Model
+class TeacherLesson extends Model
 {
-    public $timestamps = false; // Desactiva las columnas de marca de tiempo
-
-    protected $table = 'clase_users';
+    protected $table = 'teacher_lessons';
 
     protected $fillable = [
-        'clase_id',
+        'lesson_id',
         'user_id',
-        'state_id',
-        'inscription_date'
+        'created_at',
+        'updated_at'
     ];
 
     //La relacion hasMany indica que una clase puede tener muchas clases-usurios
-    public function clase()
+    public function lesson()
     {
-        return $this->belongsTo(Clases::class, 'clase_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 
     public function user()

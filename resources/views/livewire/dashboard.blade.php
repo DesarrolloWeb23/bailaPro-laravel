@@ -93,6 +93,14 @@
                 </a>
             </li>
             <li>
+                <a wire:click="changeView('academies')" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                        <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Academias</span>
+                </a>
+            </li>
+            <li>
                 <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
@@ -109,71 +117,19 @@
     <div class="p-4 sm:ml-64">
         @switch($view)
             @case('users')
-                <x-section-table name="Listado de usuarios">
-                    <x-slot name="slot">
-                        <x-table :headers="['ID', 'ROL', 'NOMBRE COMPLETO', 'EMAIL', 'ESTADO', 'ACCIONES']">
-                            @foreach ($users as $usuario)
-                                <tr>
-                                    <td class="px-6 py-4">{{ $usuario->id }}</td>
-                                    <td class="px-6 py-4">
-                                        @forelse ($usuario->roles as $role)
-                                            <span class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ $role->name }}</span>
-                                        @empty
-                                            <span>Rol no encontrado</span>
-                                        @endforelse
-                                    </td>
-                                    <td class="px-6 py-4">{{ $usuario->name }}</td>
-                                    <td class="px-6 py-4">{{ $usuario->email }}</td>
-                                    <td class="px-6 py-4">{{ $usuario->state ? $usuario->state->name : 'Estudiante no encontrado' }}</td>
-                                    <td class="px-6 py-4">
-                                        <x-danger-button wire:click="delete({{ $usuario->id }})">Eliminar</x-danger-button>
-                                        <button wire:click="edit({{ $usuario->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
-                    </x-slot>
-                </x-section-table>
+                @livewire('usuarios')
                 @break
 
             @case('roles')
-                <x-section-table name="Listado de roles">
-                    <x-slot name="slot">
-                        <x-table :headers="['ID', 'NOMBRE', 'AUTENTICACION','ACCIONES']">
-                            @foreach ($roles as $rol)
-                                <tr>
-                                    <td class="px-6 py-4">{{ $rol->id }}</td>
-                                    <td class="px-6 py-4">{{ $rol->name }}</td>
-                                    <td class="px-6 py-4">{{ $rol->guard_name }}</td>
-                                    <td class="px-6 py-4">
-                                        <x-danger-button wire:click="delete({{ $rol->id }})">Eliminar</x-danger-button>
-                                        <button wire:click="edit({{ $rol->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
-                    </x-slot>
-                </x-section-table>
+                @livewire('roles')
                 @break
 
-                @case('permissions')
-                <x-section-table name="Listado de permisos">
-                    <x-slot name="slot">
-                        <x-table :headers="['ID', 'NOMBRE', 'AUTENTICACION','ACCIONES']">
-                            @foreach ($permissions as $permission)
-                                <tr>
-                                    <td class="px-6 py-4">{{ $permission->id }}</td>
-                                    <td class="px-6 py-4">{{ $permission->name }}</td>
-                                    <td class="px-6 py-4">{{ $permission->guard_name }}</td>
-                                    <td class="px-6 py-4">
-                                        <x-danger-button wire:click="delete({{ $permission->id }})">Eliminar</x-danger-button>
-                                        <button wire:click="edit({{ $permission->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded">Editar</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
-                    </x-slot>
-                </x-section-table>
+            @case('permissions')
+                @livewire('permissions')
+                @break
+            
+            @case('academies')
+                @livewire('academies')
                 @break
         
             @default
@@ -194,9 +150,9 @@
 
                 <div class="max-w-sm h-20 p-6 bg-violet-400 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="#">
-                        <h5 class="font-semibold tracking-tight text-white">Total pendejos</h5>
+                        <h5 class="font-semibold tracking-tight text-white">Total academias</h5>
                     </a>
-                    <p class="font-semibold tracking-tight text-white">1</p>
+                    <p class="font-semibold tracking-tight text-white">{{$totalAcademies}}</p>
                 </div>
 
                 <div class="max-w-sm h-20 p-6 bg-pink-400 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
