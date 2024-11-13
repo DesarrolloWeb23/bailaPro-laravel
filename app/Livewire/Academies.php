@@ -60,12 +60,11 @@ class Academies extends Component
                 'phone' => $this->phone,
                 'description' => $this->description,
                 'state_id' => $this->state_id,
-                'email' => $this->email,
-                'updated_at' => now()
+                'email' => $this->email
             ]);
 
             $this->academies = Academy::all();
-            $this->reset(['name', 'address', 'phone']);
+            $this->reset(['name', 'address', 'phone', 'description', 'state_id', 'email']);
             session()->flash('message', 'Academia actualizada correctamente.');
 
         } catch (\Exception $th) {
@@ -89,7 +88,7 @@ class Academies extends Component
             ]);
 
             $this->academies = Academy::all();
-            $this->reset(['name', 'address', 'phone']);
+            $this->reset(['name', 'address', 'phone', 'description', 'state_id', 'email']);
             session()->flash('message', 'Academia creada correctamente.');
 
         } catch (\Exception $th) {
