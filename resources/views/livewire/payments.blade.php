@@ -60,9 +60,6 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                ID
-                            </th>
-                            <th scope="col" class="px-6 py-3">
                                 CONCEPTO
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -82,9 +79,6 @@
                     <tbody>
                         @foreach ($payments as $payment)
                             <tr>
-                                <th wire:key="{{ $payment->id }}" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
-                                    {{$payment->id}}
-                                </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "> 
                                     {{$payment->name}}
                                 </th>
@@ -98,8 +92,10 @@
                                     {{ $payment->user ? $payment->user->name : 'Estudiante no encontrado' }}
                                 </th>
                                 <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                                    <x-danger-button wire:click="delete({{ $payment->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="submit">Eliminar</x-danger-button>
+                                    @hasanyrole('SuperAdmin')
+                                        <x-danger-button wire:click="delete({{ $payment->id }})"  wire:confirm="Esta seguro que desea eliminar?" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="submit">Eliminar</x-danger-button>
+                                    @endhasanyrole
                                     <button wire:click="edit({{ $payment->id }})" 
                                         class="bg-yellow-500 text-white active:bg-yellow-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                                         Editar

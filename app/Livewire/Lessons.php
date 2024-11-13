@@ -3,10 +3,10 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\ClaseUser;
 use App\Models\Lesson;
 use App\Models\User;
 use App\Models\AcademyUser;
+use App\Models\TeacherLesson;
 
 class Lessons extends Component
 {
@@ -27,21 +27,7 @@ class Lessons extends Component
 
     public function mount()
     {
-        $sessionUser = auth()->user()->id;
-
-        if (User::find($sessionUser)->hasRole('Estudiante')) {
-            //traer las clases del estudiante
-            //$this->lessons = ClaseUser::with('user')->with('Estudiante')->get();
-            $this->lessons = Lesson::inscriptionsByStudent($sessionUser);
-        }
-        if (User::find($sessionUser)->hasRole('Profesor')) {
-            $this->lessons = ClaseUser::where('user_id', $sessionUser )->with('teachers')->get();
-        }
-        else if (User::find($sessionUser)->hasRole('Administrador|SuperAdmin')){
-            //me consulta todas las lessons creeadas por la academia del usuario que inicio sesion
-            $this->lessons = Lesson::where('academy_id', AcademyUser::where('user_id', $sessionUser)->first()->academy_id)->with('teachers')->get();
-
-        } 
+        $this->updateLessons();
         
         $this->teachers = User::whereHas('roles', function($q){
             $q->where('name', 'Profesor');
@@ -51,8 +37,22 @@ class Lessons extends Component
     public function delete($id)
     {
         try {
-            ClaseUser::where('id',$id)->delete();
+            Lesson::where('id',$id)->delete();
             return $this->redirect('/lsn/r',navigate:true); 
+        } catch (\Exception $th) {
+            dd($th);
+        }
+    }
+
+    //Funcion para inactivar las lessons
+    public function disable($id)
+    {
+        try {
+            $lesson = Lesson::findOrFail($id);
+            $lesson->update([
+                'state_id'=> 2
+            ]);
+            $this->updateLessons();
         } catch (\Exception $th) {
             dd($th);
         }
@@ -60,7 +60,7 @@ class Lessons extends Component
 
     public function edit($id)
     {
-        $lesson = ClaseUser::findOrFail($id);
+        $lesson = Lesson::findOrFail($id);
 
         $this->lessonId = $lesson->id;
         $this->name = $lesson->name;
@@ -86,7 +86,9 @@ class Lessons extends Component
                 'user_id'=> $this->teacherId
             ]);
 
-            return $this->redirect('/lsn/r', navigate: true);
+            $this->updateLessons();
+            $this->reset(['name','description','duration','schedule','capacity','start_date','end_date','state_id','user_id']);
+            session()->flash('message', 'Clase actualizada correctamente.');
         } catch (\Exception $th) {
             dd($th);
         }
@@ -96,7 +98,7 @@ class Lessons extends Component
     {
         try {
             $academyUser = AcademyUser::where('user_id', auth()->user()->id)->first();
-            Lesson::create([
+            $lesson = Lesson::create([
                 'name'=> $this->name,
                 'description'=> $this->description,
                 'duration'=> $this->duration,
@@ -109,16 +111,39 @@ class Lessons extends Component
             ]);
 
             TeacherLesson::create([
-                'lesson_id'=> Lesson::latest()->first()->id,
-                'user_id'=> $this->teacherId,
+                'lesson_id'=> $lesson->id,
+                'user_id'=> $this->user_id,
             ]);
 
-            $this->lessons = Lesson::all();
-            $this->reset();
+            $this->updateLessons();
+            $this->reset(['name','description','duration','schedule','capacity','start_date','end_date','state_id','user_id']);
             session()->flash('message', 'Clase creada correctamente.');
         } catch (\Exception $th) {
             dd($th);
         }
+    }
+
+    //funcion para actualizar la lista de clases
+    public function updateLessons()
+    {
+        $sessionUser = auth()->user()->id;
+
+        if (User::find($sessionUser)->hasRole('Estudiante')) {
+            //traer las clases del estudiante
+            //$this->lessons = ClaseUser::with('user')->with('Estudiante')->get();
+            $this->lessons = Lesson::inscriptionsByStudent($sessionUser);
+        }
+        if (User::find($sessionUser)->hasRole('Profesor')) {
+            $this->lessons = ClaseUser::where('user_id', $sessionUser )->with('teachers')->get();
+        }
+        if (User::find($sessionUser)->hasRole('SuperAdmin')) {
+            $this->lessons = Lesson::with('teachers','academy')->get(); //trae todas las clases
+        }
+        else if (User::find($sessionUser)->hasRole('Administrador')){
+            //me consulta todas las lessons creeadas por la academia del usuario que inicio sesion, que se encuentren activas
+            $this->lessons = Lesson::where('academy_id', AcademyUser::where('user_id', $sessionUser)->first()->academy_id)->with('teachers')
+            ->where('state_id', 1)->get();
+        } 
     }
 
     public function render()
