@@ -55,6 +55,8 @@ class Usuarios extends Component
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
+        $user_rol = $usuario->roles->first();
+        $academy = AcademyUser::where('user_id', $usuario->id)->first();
 
         $this->usuarioId = $usuario->id;
         $this->name = $usuario->name;
@@ -63,6 +65,8 @@ class Usuarios extends Component
         $this->phone = $usuario->phone;
         $this->date_of_birth = $usuario->date_of_birth;
         $this->state_id = $usuario->state_id;
+        $this->rol_id = $user_rol->name;
+        $this->academyId = $academy->academy_id;
     }
 
     public function update()
@@ -79,7 +83,15 @@ class Usuarios extends Component
                 'state_id' => $this->state_id
             ]);
 
-            return $this->redirect('/usr/r', navigate: true);
+            //buscar en el modelo AcademyUser la relacion del usuario con la academia y actualizarla
+            $academyUser = AcademyUser::where('user_id', $this->usuarioId)->first();
+            $academyUser->update([
+                'academy_id'=> $this->academyId
+            ]);
+
+            $this->updateUsers();
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id','academyId']);
+            session()->flash('message', 'Usuario actualizado correctamente.');
         } catch (\Exception $th) {
             dd($th);
         }
@@ -124,5 +136,11 @@ class Usuarios extends Component
     {
         //retornar la vista con los usuarios y roles
         return view('livewire.usuarios');
+    }
+
+    //Funcion para actualizar el arreglo de usuarios
+    public function updateUsers()
+    {
+        $this->users = User::with('state','roles')->get();
     }
 }

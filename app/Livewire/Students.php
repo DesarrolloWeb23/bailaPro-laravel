@@ -16,6 +16,8 @@ class Students extends Component
     public $fecha_registro;
     public $name;
     public $phone;
+    public $password;
+    public $password_confirmation;
     public $students;
     public $studentId;
     public $state_id;
@@ -53,9 +55,27 @@ class Students extends Component
         }
     }
 
+    //funcion para cambiar el estado del usuario a inactivo
+    public function disable($id)
+    {
+        try {
+            $student = User::findOrFail($id);
+            $student->update([
+                'state_id' => 2
+            ]);
+
+            $this->updateStudents(); 
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id']);
+            session()->flash('message', 'Usuario inactivado correctamente.');
+        } catch (\Exception $th) {
+            dd($th);
+        }
+    }
+
     public function edit($id)
     {
         $student = User::findOrFail($id);
+        $student_rol = $student->roles->first();
 
         $this->studentId = $student->id;
         $this->email = $student->email;
@@ -63,6 +83,7 @@ class Students extends Component
         $this->name = $student->name;
         $this->phone = $student->phone;
         $this->state_id = $student->state_id;
+        $this->rol_id = $student_rol->name;
     }
 
     public function update()
@@ -76,7 +97,9 @@ class Students extends Component
                 'phone' => $this->phone
             ]);
 
-            return $this->redirect('/std/r', navigate: true);
+            $this->updateStudents(); 
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id']);
+            session()->flash('message', 'Usuario actualizado correctamente.');
         } catch (\Exception $th) {
             dd($th);
         }
@@ -89,8 +112,8 @@ class Students extends Component
                 'email' => $this->email,
                 'date_of_birth' => $this->date_of_birth,
                 'created_at' => now(),
-                'password' => bcrypt('password'),
-                'password_confirmation' => bcrypt('password'),
+                'password' => bcrypt($this->password),
+                'password_confirmation' => bcrypt($this->password_confirmation),
                 'state_id' => $this->state_id,
                 'role_id' => $this->rol_id,
                 'name' => $this->name,
@@ -104,7 +127,9 @@ class Students extends Component
                 'user_id'=> User::latest()->first()->id,
             ]);
 
-            return $this->redirect('/std/r',navigate:true); 
+            $this->updateStudents(); 
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id']);
+            session()->flash('message', 'Usuario creado correctamente.');
         } catch (\Exception $th) {
             dd($th);
         }
@@ -115,5 +140,20 @@ class Students extends Component
         return view('livewire.students',[
             'teachers' => $this->students
         ]);
+    }
+
+    //funcion para actualizar el arreglo de estudiantes
+    public function updateStudents()
+    {
+        $academyId = AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id;
+
+        $this->students = User::role('Estudiante')->whereHas('state', function ($query) {
+            $query->where('id', '1'); // Filtra para el estado activo
+        })
+        ->whereHas('academyUsers.academy', function ($query) use ($academyId) {
+            $query->where('id', $academyId); // Filtra por el ID de la academia específica
+        })
+        ->with('academyUsers.academy','state')
+        ->get();
     }
 }
