@@ -42,7 +42,7 @@
                     <option>...</option>
                     @foreach ($states as $state)
                         <tr>
-                            <option value="{{$state->name}}">{{$state->name}}</option>
+                            <option value="{{$state->id}}">{{$state->name}}</option>
                         </tr>
                     @endforeach
                 </select>
