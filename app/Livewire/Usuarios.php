@@ -116,11 +116,14 @@ class Usuarios extends Component
 
             //valida si el usuario de la  sesion es rol SuperAdmin y crear la relacion del usuario con la academia
             if (User::find($sessionUser)->hasRole('SuperAdmin')){
-                $creator = new AcademyUser();
-                $creator->create([
-                    'academy_id' => $this->academyId,
-                    'user_id' => User::latest()->first()->id
-                ]);
+                //valida si el rol del usuario a registrar es profesor, no se le asigna una academia
+                if ($this->rol_id != 'Profesor'){
+                    $creator = new AcademyUser();
+                    $creator->create([
+                        'academy_id' => $this->academyId,
+                        'user_id' => User::latest()->first()->id
+                    ]);
+                }
             }
 
             $this->users = User::with('state','roles')->get();
