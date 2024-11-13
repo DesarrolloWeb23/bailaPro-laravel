@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\AcademyUser;
 use App\Models\State;
 use App\Models\Role;
+use App\Models\Academy;
 
 class Students extends Component
 {
@@ -25,21 +26,12 @@ class Students extends Component
     public $states;
     public $roles;
     public $sessionUser;
+    public $academies;
 
     public function mount()
     {
         $this->sessionUser = auth()->user()->id;
-        $academyId = AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id;
-
-        //realiza la consulta de los estudiantes de la academia del usuario que inicio sesion
-        $this->students = User::role('Estudiante')->whereHas('state', function ($query) {
-            $query->where('id', '1'); // Filtra para el estado activo
-        })
-        ->whereHas('academyUsers.academy', function ($query) use ($academyId) {
-            $query->where('id', $academyId); // Filtra por el ID de la academia específica
-        })
-        ->with('academyUsers.academy','state')
-        ->get();
+        $this->updateStudents(); 
 
         $this->states = State::all();
         $this->roles = Role::where('name', 'Estudiante')->get();
@@ -98,7 +90,7 @@ class Students extends Component
             ]);
 
             $this->updateStudents(); 
-            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id']);
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id','password','password_confirmation','academy_id']);
             session()->flash('message', 'Usuario actualizado correctamente.');
         } catch (\Exception $th) {
             dd($th);
@@ -128,7 +120,7 @@ class Students extends Component
             ]);
 
             $this->updateStudents(); 
-            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id']);
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id','password','password_confirmation','academy_id']);
             session()->flash('message', 'Usuario creado correctamente.');
         } catch (\Exception $th) {
             dd($th);
@@ -145,15 +137,29 @@ class Students extends Component
     //funcion para actualizar el arreglo de estudiantes
     public function updateStudents()
     {
-        $academyId = AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id;
+        if (User::find($this->sessionUser)->hasRole('Profesor')) {
+            
+        }
+        if (User::find($this->sessionUser)->hasRole('SuperAdmin')) {
+            $this->students = User::role('Estudiante')->whereHas('state', function ($query) {
+                $query->where('id', '1'); // Filtra para el estado activo
+            })
+            ->with('academyUsers.academy','state')
+            ->get();
+            //taer las academias que se encuentran activas
+            $this->academies = Academy::where('state_id', 1)->get();
+        }
+        else if (User::find($this->sessionUser)->hasRole('Administrador')){
+            $academyId = AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id;
 
-        $this->students = User::role('Estudiante')->whereHas('state', function ($query) {
-            $query->where('id', '1'); // Filtra para el estado activo
-        })
-        ->whereHas('academyUsers.academy', function ($query) use ($academyId) {
-            $query->where('id', $academyId); // Filtra por el ID de la academia específica
-        })
-        ->with('academyUsers.academy','state')
-        ->get();
+            $this->students = User::role('Estudiante')->whereHas('state', function ($query) {
+                $query->where('id', '1'); // Filtra para el estado activo
+            })
+            ->whereHas('academyUsers.academy', function ($query) use ($academyId) {
+                $query->where('id', $academyId); // Filtra por el ID de la academia específica
+            })
+            ->with('academyUsers.academy','state')
+            ->get();
+        } 
     }
 }

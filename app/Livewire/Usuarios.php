@@ -90,7 +90,7 @@ class Usuarios extends Component
             ]);
 
             $this->updateUsers();
-            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id','academyId']);
+            $this->reset(['name','email','date_of_birth','phone','state_id','rol_id','academyId','password','password_confirmation']);
             session()->flash('message', 'Usuario actualizado correctamente.');
         } catch (\Exception $th) {
             dd($th);
@@ -127,7 +127,7 @@ class Usuarios extends Component
             }
 
             $this->users = User::with('state','roles')->get();
-            $this->reset('name','email','date_of_birth','phone','state_id','password','password_confirmation','rol_id');
+            $this->reset('name','email','date_of_birth','phone','state_id','password','password_confirmation','rol_id','academyId');
             session()->flash('message', 'Usuario creado correctamente.');
 
         } catch (\Exception $th) {
