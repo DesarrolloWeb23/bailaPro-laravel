@@ -121,7 +121,7 @@ class Usuarios extends Component
                     $creator = new AcademyUser();
                     $creator->create([
                         'academy_id' => $this->academyId,
-                        'user_id' => User::latest()->first()->id
+                        'user_id' => $user->id
                     ]);
                 }
             }
