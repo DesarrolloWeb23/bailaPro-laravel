@@ -124,7 +124,7 @@ class Students extends Component
 
             AcademyUser::create([
                 'academy_id'=> AcademyUser::where('user_id', $this->sessionUser)->first()->academy_id,
-                'user_id'=> User::latest()->first()->id,
+                'user_id'=> $user->id,
             ]);
 
             $this->updateStudents(); 
